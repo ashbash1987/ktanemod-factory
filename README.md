@@ -17,3 +17,7 @@ Cool! If you've got an idea for how the factory room should be styled/themed, an
 ## I have bugs!
 
 Not so cool, but anticipated! Please post them to the [issues page](https://github.com/ashbash1987/ktanemod-factory/issues), including any steps to reproduce, platform you're playing on, and any log files if necessary.
+
+## I have pull requests for things!
+
+I might accept pull requests for small bug fixes, but for major functionality, I'd at least like to know about it first before you just submit pull requests. Don't go wasting your time on something that I might already be working on!
