@@ -9,12 +9,19 @@ namespace FactoryAssembly
     public class FactoryRoom : MonoBehaviour
     {
         /// <remarks>
-        /// Due to issues using custom assembly in Unity not exposing fields, have to discover required transforms by name instead. Not the greatest option, but it works.
+        /// Due to issues using custom assembly in Unity not exposing fields, have to discover things by name instead. Not the greatest option, but it works.
         /// </remarks>
         private static readonly string[] CONVEYOR_BELT_NODE_NAMES = { "ConveyorBeltNodeA", "ConveyorBeltNodeB" };
+        private static readonly string LEFT_DOOR_NAME = "LeftDoor";
+        private static readonly string RIGHT_DOOR_NAME = "RightDoor";
+        private static readonly string CONVEYOR_TOP_NAME = "ConveyorTop";
+        private static readonly string DOOR_LONG_AUDIO_NAME = "DoorLong";
+        private static readonly string DOOR_SHORT_AUDIO_NAME = "DoorShort";
+        private static readonly string CONVEYOR_AUDIO_NAME = "Conveyor";
 
         private Animator _conveyorBeltAnimator = null;
         private KMGameplayRoom _room = null;
+        private KMAudio _audio = null;
 
         private Queue<FactoryBomb> _bombs = new Queue<FactoryBomb>();
         private FactoryBomb _currentBomb = null;
@@ -23,6 +30,10 @@ namespace FactoryAssembly
         private Transform[] _conveyorBeltNodes = null;
         private int _nextBeltNodeIndex = 0;
 
+        private Transform _leftDoor = null;
+        private Transform _rightDoor = null;
+        private Transform _conveyorTop = null;
+
         /// <summary>
         /// Unity event.
         /// </summary>
@@ -30,6 +41,7 @@ namespace FactoryAssembly
         {
             _conveyorBeltAnimator = GetComponent<Animator>();
             _room = GetComponent<KMGameplayRoom>();
+            _audio = GetComponent<KMAudio>();
 
             _room.OnLightChange += OnLightChange;
         }
@@ -45,6 +57,10 @@ namespace FactoryAssembly
             {
                 _conveyorBeltNodes[nodeIndex] = transform.Find(CONVEYOR_BELT_NODE_NAMES[nodeIndex]);
             }
+
+            _leftDoor = transform.Find(LEFT_DOOR_NAME);
+            _rightDoor = transform.Find(RIGHT_DOOR_NAME);
+            _conveyorTop = transform.Find(CONVEYOR_TOP_NAME);
 
             StartCoroutine(FindBombs());
             StartCoroutine(StartGameplay());
@@ -135,6 +151,7 @@ namespace FactoryAssembly
             }
 
             _conveyorBeltAnimator.SetTrigger("NextBomb");
+            _audio.PlaySoundAtTransform(CONVEYOR_AUDIO_NAME, _conveyorTop);
         }
 
         /// <summary>
@@ -160,6 +177,42 @@ namespace FactoryAssembly
                 _oldBomb.EndBomb();
                 _oldBomb = null;
             }
-        }                
+        }
+
+        /// <summary>
+        /// The left door opens.
+        /// </summary>
+        /// <remarks>Invoked by animation event.</remarks>
+        private void DoorLeftOpen()
+        {
+            _audio.PlaySoundAtTransform(DOOR_LONG_AUDIO_NAME, _leftDoor);
+        }
+
+        /// <summary>
+        /// The left door closes.
+        /// </summary>
+        /// <remarks>Invoked by animation event.</remarks>
+        private void DoorLeftClose()
+        {
+            _audio.PlaySoundAtTransform(DOOR_SHORT_AUDIO_NAME, _leftDoor);
+        }
+
+        /// <summary>
+        /// The right door opens.
+        /// </summary>
+        /// <remarks>Invoked by animation event.</remarks>
+        private void DoorRightOpen()
+        {
+            _audio.PlaySoundAtTransform(DOOR_SHORT_AUDIO_NAME, _rightDoor);
+        }
+
+        /// <summary>
+        /// The right door closes.
+        /// </summary>
+        /// <remarks>Invoked by animation event.</remarks>
+        private void DoorRightClose()
+        {
+            _audio.PlaySoundAtTransform(DOOR_LONG_AUDIO_NAME, _rightDoor);
+        }
     }
 }
