@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Pacing;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace FactoryAssembly
@@ -20,8 +22,6 @@ namespace FactoryAssembly
 
         private Transform[] _conveyorBeltNodes = null;
         private int _nextBeltNodeIndex = 0;
-
-        private bool _startedRoom = false;
 
         /// <summary>
         /// Unity event.
@@ -47,6 +47,7 @@ namespace FactoryAssembly
             }
 
             StartCoroutine(FindBombs());
+            StartCoroutine(StartGameplay());
         }
 
         private IEnumerator FindBombs()
@@ -59,9 +60,44 @@ namespace FactoryAssembly
             foreach (Bomb bomb in bombs)
             {
                 FactoryBomb factoryBomb = bomb.gameObject.AddComponent<FactoryBomb>();
-                factoryBomb.MoveOffscreen(_conveyorBeltNodes[0]);
+                factoryBomb.SetupStartPosition(_conveyorBeltNodes[0]);
                 _bombs.Enqueue(factoryBomb);
             }
+        }
+
+        private IEnumerator StartGameplay()
+        {
+            GameplayState gameplayState = SceneManager.Instance.GameplayState;
+
+            gameplayState.StopAllCoroutines();
+
+            yield return new WaitForSeconds(2.0f);
+
+            gameplayState.Room.ActivateCeilingLights();
+            if (GameplayState.OnLightsOnEvent != null)
+            {
+                GameplayState.OnLightsOnEvent();
+            }
+
+            if ((KTInputManager.Instance.GetCurrentSelectable() == null || KTInputManager.Instance.GetCurrentSelectable().Parent == KTInputManager.Instance.RootSelectable) && !KTInputManager.Instance.IsMotionControlMode())
+            {
+                KTInputManager.Instance.SelectRootDefault();
+            }
+
+            if (KTInputManager.Instance.IsMotionControlMode())
+            {
+                KTInputManager.Instance.SelectableManager.EnableMotionControls();
+            }
+
+            yield return new WaitForSeconds(1.0f);
+
+            GetNextBomb();
+
+            PropertyInfo roundStartedProperty = typeof(GameplayState).GetProperty("RoundStarted", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            roundStartedProperty.SetValue(gameplayState, true, null);
+
+            FieldInfo paceMakerField = typeof(GameplayState).GetField("paceMaker", BindingFlags.Instance | BindingFlags.NonPublic);
+            ((PaceMaker)paceMakerField.GetValue(gameplayState)).StartRound(gameplayState.Mission);
         }
 
         /// <summary>
@@ -77,11 +113,7 @@ namespace FactoryAssembly
 
         private void OnLightChange(bool on)
         {
-            if (on && !_startedRoom)
-            {
-                _startedRoom = true;
-                GetNextBomb();
-            }
+            //TODO: Control light intensity in the room
         }
 
         /// <summary>
