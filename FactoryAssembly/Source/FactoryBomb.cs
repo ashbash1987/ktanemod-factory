@@ -13,22 +13,34 @@ namespace FactoryAssembly
             }
         }
 
+        private const int NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX = 11;
+        private const int DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX = 12;
+
         private static readonly Vector3 OFFSCREEN_POSITION = new Vector3(0.0f, -100000.0f, 0.0f);
 
         private Bomb _bomb = null;
         private TimerComponent _timer = null;
         private FloatingHoldable _holdable = null;
+        private SelectableArea _selectableArea = null;
         private Vector3 _targetStartPosition = Vector3.zero;
 
+        #region Unity Lifecycle
+        /// <summary>
+        /// Unity event.
+        /// </summary>
         private void Awake()
         {
             _bomb = GetComponent<Bomb>();
             _timer = _bomb.GetTimer();
             _holdable = GetComponentInChildren<FloatingHoldable>();
+            _selectableArea = GetComponentInChildren<SelectableArea>();
 
             ChangeTimerVisibility(false);
+            SetSelectableLayer(false);
         }
+        #endregion
 
+        #region Public Methods
         public void SetupStartPosition(Transform conveyorBeltNode)
         {
             _targetStartPosition = conveyorBeltNode.transform.position;
@@ -56,16 +68,25 @@ namespace FactoryAssembly
             StartCoroutine(StartBombCoroutine());
         }
 
+        public void DisableBomb()
+        {
+            SetSelectableLayer(false);
+        }
+
         public void EndBomb()
         {
             //Can't destroy the bomb, as it causes problems when trying to leave the gameplay room after defusal, as it needs the bomb for the time remaining value!
             //So instead of DestroyObject(..), move it to somewhere offscreen a long way away, and *hope* for the best!
+            transform.SetParent(null, true);
             transform.position = OFFSCREEN_POSITION;
         }
+        #endregion
 
+        #region Private Methods
         private IEnumerator StartBombCoroutine()
         {
             ChangeTimerVisibility(true);
+            SetSelectableLayer(true);
 
             yield return new WaitForSeconds(1.0f);
 
@@ -99,5 +120,11 @@ namespace FactoryAssembly
         {
             _timer.StartTimer();
         }
+
+        private void SetSelectableLayer(bool enable)
+        {
+            _selectableArea.gameObject.layer = enable ? NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX : DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX;
+        }
+        #endregion
     }
 }

@@ -34,6 +34,7 @@ namespace FactoryAssembly
         private Transform _rightDoor = null;
         private Transform _conveyorTop = null;
 
+        #region Unity Lifecycle
         /// <summary>
         /// Unity event.
         /// </summary>
@@ -66,6 +67,32 @@ namespace FactoryAssembly
             StartCoroutine(StartGameplay());
         }
 
+        /// <summary>
+        /// Unity event.
+        /// </summary>
+        private void Update()
+        {
+            if (_currentBomb != null && _currentBomb.IsReadyToShip)
+            {
+                _currentBomb.DisableBomb();
+                GetNextBomb();
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Called by KMGameplayRoom on lighting change pacing events.
+        /// </summary>
+        /// <param name="on">If true, lights should be on; if false, lights should be off.</param>
+        private void OnLightChange(bool on)
+        {
+            //TODO: Control light intensity in the room
+        }
+
+        /// <summary>
+        /// Coroutine to find spawned bombs in the gameplay room.
+        /// </summary>
         private IEnumerator FindBombs()
         {
             yield return null;
@@ -81,6 +108,9 @@ namespace FactoryAssembly
             }
         }
 
+        /// <summary>
+        /// Coroutine to replace the standard GameplayState start round coroutine.
+        /// </summary>
         private IEnumerator StartGameplay()
         {
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
@@ -117,22 +147,6 @@ namespace FactoryAssembly
         }
 
         /// <summary>
-        /// Unity event.
-        /// </summary>
-        private void Update()
-        {
-            if (_currentBomb != null && _currentBomb.IsReadyToShip)
-            {
-                GetNextBomb();
-            }
-        }
-
-        private void OnLightChange(bool on)
-        {
-            //TODO: Control light intensity in the room
-        }
-
-        /// <summary>
         /// Requests the next bomb to show up.
         /// </summary>
         private void GetNextBomb()
@@ -154,6 +168,7 @@ namespace FactoryAssembly
             _audio.PlaySoundAtTransform(CONVEYOR_AUDIO_NAME, _conveyorTop);
         }
 
+        #region Animation Methods
         /// <summary>
         /// Starts the 'current' bomb.
         /// </summary>
@@ -214,5 +229,7 @@ namespace FactoryAssembly
         {
             _audio.PlaySoundAtTransform(DOOR_LONG_AUDIO_NAME, _rightDoor);
         }
+        #endregion
+        #endregion
     }
 }
