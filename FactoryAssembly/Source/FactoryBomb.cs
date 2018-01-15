@@ -13,6 +13,12 @@ namespace FactoryAssembly
             }
         }
 
+        public Selectable Selectable
+        {
+            get;
+            private set;
+        }
+
         private const int NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX = 11;
         private const int DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX = 12;
 
@@ -34,6 +40,7 @@ namespace FactoryAssembly
             _timer = _bomb.GetTimer();
             _holdable = GetComponentInChildren<FloatingHoldable>();
             _selectableArea = GetComponentInChildren<SelectableArea>();
+            Selectable = GetComponent<Selectable>();
 
             ChangeTimerVisibility(false);
             SetSelectableLayer(false);

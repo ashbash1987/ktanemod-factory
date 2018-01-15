@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Pacing;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -34,6 +35,10 @@ namespace FactoryAssembly
         private Transform _rightDoor = null;
         private Transform _conveyorTop = null;
 
+        private Selectable _roomSelectable = null;
+        private Selectable[] _roomChildren = null;
+        private int _bombSelectableIndex = 0;
+
         #region Unity Lifecycle
         /// <summary>
         /// Unity event.
@@ -65,6 +70,7 @@ namespace FactoryAssembly
 
             StartCoroutine(FindBombs());
             StartCoroutine(StartGameplay());
+            StartCoroutine(AdjustSelectableGrid());
         }
 
         /// <summary>
@@ -74,6 +80,7 @@ namespace FactoryAssembly
         {
             if (_currentBomb != null && _currentBomb.IsReadyToShip)
             {
+                SetSelectableBomb(null);
                 _currentBomb.DisableBomb();
                 GetNextBomb();
             }
@@ -106,6 +113,14 @@ namespace FactoryAssembly
                 factoryBomb.SetupStartPosition(_conveyorBeltNodes[0]);
                 _bombs.Enqueue(factoryBomb);
             }
+
+            GameplayState gameplayState = SceneManager.Instance.GameplayState;
+            Selectable roomSelectable = gameplayState.Room.GetComponent<Selectable>();
+            Debug.LogFormat("Room Selectable Row Length = {0}", roomSelectable.ChildRowLength);
+            for (int i = 0; i < roomSelectable.Children.Length; ++i)
+            {
+                Debug.LogFormat("Child {0} = {1}", i, roomSelectable.Children[i] != null ? roomSelectable.Children[i].name : "NULL");
+            }
         }
 
         /// <summary>
@@ -114,7 +129,6 @@ namespace FactoryAssembly
         private IEnumerator StartGameplay()
         {
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
-
             gameplayState.StopAllCoroutines();
 
             yield return new WaitForSeconds(2.0f);
@@ -146,6 +160,29 @@ namespace FactoryAssembly
             ((PaceMaker)paceMakerField.GetValue(gameplayState)).StartRound(gameplayState.Mission);
         }
 
+        private IEnumerator AdjustSelectableGrid()
+        {
+            GameplayState gameplayState = SceneManager.Instance.GameplayState;
+            _roomSelectable = gameplayState.Room.GetComponent<Selectable>();
+
+            _roomChildren = new Selectable[_roomSelectable.Children.Length];
+            Array.Copy(_roomSelectable.Children, _roomChildren, _roomChildren.Length);
+
+            int roomChildRowLength = _roomSelectable.ChildRowLength;
+            int roomDefaultSelectableIndex = _roomSelectable.DefaultSelectableIndex;
+
+            _bombSelectableIndex = Array.FindIndex(_roomChildren, (x) => x != null && x.GetComponent<Bomb>() != null);
+
+            yield return null;
+            yield return null;
+
+            _roomSelectable.Children = _roomChildren;
+            _roomSelectable.ChildRowLength = roomChildRowLength;
+            _roomSelectable.DefaultSelectableIndex = roomDefaultSelectableIndex;
+
+            SetSelectableBomb(null);
+        }
+
         /// <summary>
         /// Requests the next bomb to show up.
         /// </summary>
@@ -168,6 +205,21 @@ namespace FactoryAssembly
             _audio.PlaySoundAtTransform(CONVEYOR_AUDIO_NAME, _conveyorTop);
         }
 
+        private void SetSelectableBomb(FactoryBomb bomb)
+        {
+            KTInputManager.Instance.ClearSelection();
+
+            Selectable selectable = bomb != null ? bomb.Selectable : null;
+
+            _roomChildren[_bombSelectableIndex] = selectable;
+
+            KTInputManager.Instance.RootSelectable = _roomSelectable;
+            KTInputManager.Instance.SelectableManager.ConfigureSelectableAreas(KTInputManager.Instance.RootSelectable);
+            KTInputManager.Instance.SelectRootDefault();
+
+            _roomSelectable.Init();
+        }
+
         #region Animation Methods
         /// <summary>
         /// Starts the 'current' bomb.
@@ -177,6 +229,7 @@ namespace FactoryAssembly
         {
             if (_currentBomb != null)
             {
+                SetSelectableBomb(_currentBomb);
                 _currentBomb.StartBomb();
             }
         }
