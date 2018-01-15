@@ -2208,6 +2208,16 @@ MonoBehaviour:
   m_Script: {fileID: -1608973328, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _conveyorBeltAnimator: {fileID: 0}
+  _room: {fileID: 0}
+  _audio: {fileID: 0}
+  _currentBomb: {fileID: 0}
+  _oldBomb: {fileID: 0}
+  _conveyorBeltNodes: []
+  _nextBeltNodeIndex: 0
+  _leftDoor: {fileID: 0}
+  _rightDoor: {fileID: 0}
+  _conveyorTop: {fileID: 0}
 --- !u!114 &114820259202672088
 MonoBehaviour:
   m_ObjectHideFlags: 1

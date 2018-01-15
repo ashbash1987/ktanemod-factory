@@ -20,7 +20,14 @@ namespace FactoryAssembly
         private static readonly string DOOR_SHORT_AUDIO_NAME = "DoorShort";
         private static readonly string CONVEYOR_AUDIO_NAME = "Conveyor";
 
+        private static readonly Color AMBIENT_OFF_COLOR = new Color(0.01f, 0.01f, 0.01f);
+        private static readonly Color AMBIENT_ON_COLOR = new Color(0.15f, 0.15f, 0.15f);
+
+        private const float LIGHT_OFF_INTENSITY = 0.02f;
+        private const float LIGHT_ON_INTENSITY = 1.0f;
+
         private Animator _conveyorBeltAnimator = null;
+        private Light[] _lights = null;
         private KMGameplayRoom _room = null;
         private KMAudio _audio = null;
 
@@ -38,6 +45,7 @@ namespace FactoryAssembly
         private Selectable _roomSelectable = null;
         private Selectable[] _roomChildren = null;
         private int _bombSelectableIndex = 0;
+        private bool _initialSwitchOn = true;
 
         #region Unity Lifecycle
         /// <summary>
@@ -46,6 +54,7 @@ namespace FactoryAssembly
         private void Awake()
         {
             _conveyorBeltAnimator = GetComponent<Animator>();
+            _lights = GetComponentsInChildren<Light>();
             _room = GetComponent<KMGameplayRoom>();
             _audio = GetComponent<KMAudio>();
 
@@ -71,6 +80,8 @@ namespace FactoryAssembly
             StartCoroutine(FindBombs());
             StartCoroutine(StartGameplay());
             StartCoroutine(AdjustSelectableGrid());
+
+            OnLightChange(false);
         }
 
         /// <summary>
@@ -94,7 +105,29 @@ namespace FactoryAssembly
         /// <param name="on">If true, lights should be on; if false, lights should be off.</param>
         private void OnLightChange(bool on)
         {
-            //TODO: Control light intensity in the room
+            if (_initialSwitchOn)
+            {
+                if (on)
+                {
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.Switch, 0.0f, LIGHT_ON_INTENSITY, AMBIENT_ON_COLOR));
+                    _initialSwitchOn = false;
+                }
+                else
+                {
+                    StartCoroutine(ChangeLightIntensity(null, 0.0f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
+                }
+            }
+            else
+            {
+                if (on)
+                {
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzzShort, 0.5f, LIGHT_ON_INTENSITY, AMBIENT_ON_COLOR));
+                }
+                else
+                {
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzz, 1.0f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
+                }
+            }
         }
 
         /// <summary>
@@ -112,14 +145,6 @@ namespace FactoryAssembly
                 FactoryBomb factoryBomb = bomb.gameObject.AddComponent<FactoryBomb>();
                 factoryBomb.SetupStartPosition(_conveyorBeltNodes[0]);
                 _bombs.Enqueue(factoryBomb);
-            }
-
-            GameplayState gameplayState = SceneManager.Instance.GameplayState;
-            Selectable roomSelectable = gameplayState.Room.GetComponent<Selectable>();
-            Debug.LogFormat("Room Selectable Row Length = {0}", roomSelectable.ChildRowLength);
-            for (int i = 0; i < roomSelectable.Children.Length; ++i)
-            {
-                Debug.LogFormat("Child {0} = {1}", i, roomSelectable.Children[i] != null ? roomSelectable.Children[i].name : "NULL");
             }
         }
 
@@ -160,6 +185,9 @@ namespace FactoryAssembly
             ((PaceMaker)paceMakerField.GetValue(gameplayState)).StartRound(gameplayState.Mission);
         }
 
+        /// <summary>
+        /// Coroutine to adjust the selectable grid, which is manipulated by Multiple Bombs initially to normally accomodate multiple bombs in the selectable grid.
+        /// </summary>
         private IEnumerator AdjustSelectableGrid()
         {
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
@@ -181,6 +209,29 @@ namespace FactoryAssembly
             _roomSelectable.DefaultSelectableIndex = roomDefaultSelectableIndex;
 
             SetSelectableBomb(null);
+        }
+
+        private IEnumerator ChangeLightIntensity(KMSoundOverride.SoundEffect? sound, float wait, float lightIntensity, Color ambientColor)
+        {
+            if (sound.HasValue)
+            {
+                _audio.PlayGameSoundAtTransform(sound.Value, transform);
+            }
+
+            if (wait > 0.0f)
+            {
+                yield return new WaitForSeconds(wait);
+            }
+
+            foreach (Light light in _lights)
+            {
+                light.intensity = lightIntensity;
+            }
+
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+            RenderSettings.ambientLight = ambientColor;
+            RenderSettings.ambientIntensity = 0.0f;
+            DynamicGI.UpdateEnvironment();
         }
 
         /// <summary>
