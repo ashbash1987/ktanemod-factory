@@ -27,6 +27,6 @@ MonoBehaviour:
     As this is a work in progress, expect things to change drastically from version
     to version. At the moment, the design is not particularly finalised, but at the
     very least the gameplay mechanic is in place!'
-  version: v0.3.0
+  version: v0.4.0
   outputFolder: E:\Games\SteamLibrary\steamapps\common\Keep Talking and Nobody Explodes\mods
   previewImage: {fileID: 2800000, guid: 38cd03a071b6af144b9e1466079ba64e, type: 3}

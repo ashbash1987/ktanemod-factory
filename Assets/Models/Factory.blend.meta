@@ -13,6 +13,29 @@ ModelImporter:
     100010: ConveyorTop
     100012: LeftDoor
     100014: RightDoor
+    100016: Ceiling
+    100018: DarkChute
+    100020: Floor
+    100022: LeftChute
+    100024: RightChute
+    100026: Walls
+    100028: Roller
+    100030: Roller_001
+    100032: Roller_002
+    100034: Roller_003
+    100036: Roller_004
+    100038: Roller_005
+    100040: Roller_006
+    100042: Roller_007
+    100044: Roller_008
+    100046: Roller_009
+    100048: Roller_010
+    100050: Roller_011
+    100052: Roller_012
+    100054: Roller_013
+    100056: Roller_014
+    100058: RollerWall
+    100060: RollerWall_001
     400000: ConveyorPlaceholder
     400002: ConveyorPlaceholderTop
     400004: //RootNode
@@ -21,6 +44,29 @@ ModelImporter:
     400010: ConveyorTop
     400012: LeftDoor
     400014: RightDoor
+    400016: Ceiling
+    400018: DarkChute
+    400020: Floor
+    400022: LeftChute
+    400024: RightChute
+    400026: Walls
+    400028: Roller
+    400030: Roller_001
+    400032: Roller_002
+    400034: Roller_003
+    400036: Roller_004
+    400038: Roller_005
+    400040: Roller_006
+    400042: Roller_007
+    400044: Roller_008
+    400046: Roller_009
+    400048: Roller_010
+    400050: Roller_011
+    400052: Roller_012
+    400054: Roller_013
+    400056: Roller_014
+    400058: RollerWall
+    400060: RollerWall_001
     2300000: ConveyorPlaceholder
     2300002: ConveyorPlaceholderTop
     2300004: Room
@@ -28,6 +74,29 @@ ModelImporter:
     2300008: ConveyorTop
     2300010: LeftDoor
     2300012: RightDoor
+    2300014: Ceiling
+    2300016: DarkChute
+    2300018: Floor
+    2300020: LeftChute
+    2300022: RightChute
+    2300024: Walls
+    2300026: Roller
+    2300028: Roller_001
+    2300030: Roller_002
+    2300032: Roller_003
+    2300034: Roller_004
+    2300036: Roller_005
+    2300038: Roller_006
+    2300040: Roller_007
+    2300042: Roller_008
+    2300044: Roller_009
+    2300046: Roller_010
+    2300048: Roller_011
+    2300050: Roller_012
+    2300052: Roller_013
+    2300054: Roller_014
+    2300056: RollerWall
+    2300058: RollerWall_001
     3300000: ConveyorPlaceholder
     3300002: ConveyorPlaceholderTop
     3300004: Room
@@ -35,6 +104,29 @@ ModelImporter:
     3300008: ConveyorTop
     3300010: LeftDoor
     3300012: RightDoor
+    3300014: Ceiling
+    3300016: DarkChute
+    3300018: Floor
+    3300020: LeftChute
+    3300022: RightChute
+    3300024: Walls
+    3300026: Roller
+    3300028: Roller_001
+    3300030: Roller_002
+    3300032: Roller_003
+    3300034: Roller_004
+    3300036: Roller_005
+    3300038: Roller_006
+    3300040: Roller_007
+    3300042: Roller_008
+    3300044: Roller_009
+    3300046: Roller_010
+    3300048: Roller_011
+    3300050: Roller_012
+    3300052: Roller_013
+    3300054: Roller_014
+    3300056: RollerWall
+    3300058: RollerWall_001
     4300000: ConveyorPlaceholderTop
     4300002: ConveyorPlaceholder
     4300004: Room
@@ -42,10 +134,33 @@ ModelImporter:
     4300008: RightDoor
     4300010: LeftDoor
     4300012: ConveyorTop
+    4300014: RightChute
+    4300016: LeftChute
+    4300018: Ceiling
+    4300020: Walls
+    4300022: Floor
+    4300024: DarkChute
+    4300026: Roller
+    4300028: Roller_014
+    4300030: Roller_013
+    4300032: Roller_012
+    4300034: Roller_011
+    4300036: Roller_010
+    4300038: Roller_009
+    4300040: Roller_008
+    4300042: Roller_007
+    4300044: Roller_006
+    4300046: Roller_005
+    4300048: Roller_004
+    4300050: Roller_003
+    4300052: Roller_002
+    4300054: Roller_001
+    4300056: RollerWall_001
+    4300058: RollerWall
     7400000: Default Take
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

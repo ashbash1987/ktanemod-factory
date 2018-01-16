@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: a11e6df874a60ad4f861b15933137ffe
+timeCreated: 1516137430
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: TV_Boole_Extrude_NURBS
+    100004: TV_Boole_Extrude_NURBS_11
+    100006: TV_Boole_Extrude_NURBS_11_Cap_21
+    100008: TV_Boole_Extrude_NURBS_Cap_13
+    100010: TV_Boole_Extrude_NURBS_Cap_2
+    100012: TV_Extrude_NURBS1
+    100014: TV_Extrude_NURBS1_Cap_11
+    100016: TV_Extrude_NURBS1_Cap_22
+    100018: TV_Extrude_NURBS_1
+    100020: TV_Extrude_NURBS_1_Cap_1
+    100022: TV_Extrude_NURBS_1_Cap_23
+    400000: //RootNode
+    400002: TV_Boole_Extrude_NURBS
+    400004: TV_Boole_Extrude_NURBS_11
+    400006: TV_Boole_Extrude_NURBS_11_Cap_21
+    400008: TV_Boole_Extrude_NURBS_Cap_13
+    400010: TV_Boole_Extrude_NURBS_Cap_2
+    400012: TV_Extrude_NURBS1
+    400014: TV_Extrude_NURBS1_Cap_11
+    400016: TV_Extrude_NURBS1_Cap_22
+    400018: TV_Extrude_NURBS_1
+    400020: TV_Extrude_NURBS_1_Cap_1
+    400022: TV_Extrude_NURBS_1_Cap_23
+    2300000: TV_Boole_Extrude_NURBS
+    2300002: TV_Boole_Extrude_NURBS_11
+    2300004: TV_Boole_Extrude_NURBS_11_Cap_21
+    2300006: TV_Boole_Extrude_NURBS_Cap_13
+    2300008: TV_Boole_Extrude_NURBS_Cap_2
+    2300010: TV_Extrude_NURBS1
+    2300012: TV_Extrude_NURBS1_Cap_11
+    2300014: TV_Extrude_NURBS1_Cap_22
+    2300016: TV_Extrude_NURBS_1
+    2300018: TV_Extrude_NURBS_1_Cap_1
+    2300020: TV_Extrude_NURBS_1_Cap_23
+    3300000: TV_Boole_Extrude_NURBS
+    3300002: TV_Boole_Extrude_NURBS_11
+    3300004: TV_Boole_Extrude_NURBS_11_Cap_21
+    3300006: TV_Boole_Extrude_NURBS_Cap_13
+    3300008: TV_Boole_Extrude_NURBS_Cap_2
+    3300010: TV_Extrude_NURBS1
+    3300012: TV_Extrude_NURBS1_Cap_11
+    3300014: TV_Extrude_NURBS1_Cap_22
+    3300016: TV_Extrude_NURBS_1
+    3300018: TV_Extrude_NURBS_1_Cap_1
+    3300020: TV_Extrude_NURBS_1_Cap_23
+    4300000: TV_Boole_Extrude_NURBS
+    4300002: TV_Boole_Extrude_NURBS_11
+    4300004: TV_Boole_Extrude_NURBS_11_Cap_21
+    4300006: TV_Boole_Extrude_NURBS_Cap_13
+    4300008: TV_Boole_Extrude_NURBS_Cap_2
+    4300010: TV_Extrude_NURBS1
+    4300012: TV_Extrude_NURBS1_Cap_11
+    4300014: TV_Extrude_NURBS1_Cap_22
+    4300016: TV_Extrude_NURBS_1
+    4300018: TV_Extrude_NURBS_1_Cap_1
+    4300020: TV_Extrude_NURBS_1_Cap_23
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
