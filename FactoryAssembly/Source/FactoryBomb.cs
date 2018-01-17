@@ -22,7 +22,7 @@ namespace FactoryAssembly
         private const int NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX = 11;
         private const int DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX = 12;
 
-        private static readonly Vector3 OFFSCREEN_POSITION = new Vector3(0.0f, -100000.0f, 0.0f);
+        private static readonly Vector3 OFFSCREEN_POSITION = new Vector3(0.0f, -1000.0f, 0.0f);
 
         private Bomb _bomb = null;
         private TimerComponent _timer = null;
