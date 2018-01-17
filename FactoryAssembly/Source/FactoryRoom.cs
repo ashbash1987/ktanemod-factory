@@ -21,10 +21,10 @@ namespace FactoryAssembly
         private static readonly string CONVEYOR_AUDIO_NAME = "Conveyor";
 
         private static readonly Color AMBIENT_OFF_COLOR = new Color(0.01f, 0.01f, 0.01f);
-        private static readonly Color AMBIENT_ON_COLOR = new Color(0.15f, 0.15f, 0.15f);
+        private static readonly Color AMBIENT_ON_COLOR = new Color(0.4f, 0.4f, 0.4f);
 
         private const float LIGHT_OFF_INTENSITY = 0.02f;
-        private const float LIGHT_ON_INTENSITY = 1.0f;
+        private const float LIGHT_ON_INTENSITY = 0.8f;
 
         private Animator _conveyorBeltAnimator = null;
         private Light[] _lights = null;
