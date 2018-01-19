@@ -58,6 +58,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\FactoryBomb.cs" />
     <Compile Include="Source\FactoryRoom.cs" />
+    <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />
+    <Compile Include="Source\GameModes\FactoryGameMode.cs" />
+    <Compile Include="Source\GameModes\StaticMode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

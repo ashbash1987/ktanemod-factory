@@ -48,18 +48,43 @@ namespace FactoryAssembly
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Sets up/overrides the holdable's origin position when the bomb is placed down.
+        /// </summary>
+        public void SetupHoldableOrigin(Vector3 position)
+        {
+            _holdable.OrigPosition = position;
+        }
+
+        /// <summary>
+        /// Sets up/overrides the holdable's origin orientation when the bomb is placed down.
+        /// </summary>
+        public void SetupHoldableOrientation(Quaternion rotation)
+        {
+            _holdable.OrigRotation = rotation;
+        }
+
+        /// <summary>
+        /// Sets up the initial starting position of the bomb when it will initally enter the room.
+        /// </summary>
         public void SetupStartPosition(Transform conveyorBeltNode)
         {
             _targetStartPosition = conveyorBeltNode.transform.position;
             _targetStartPosition.y = transform.position.y;
 
-            _holdable.OrigRotation = Quaternion.Euler(0.0f, Random.Range(-90.0f, 90.0f), 0.0f);
+            SetupHoldableOrientation(Quaternion.Euler(0.0f, Random.Range(-90.0f, 90.0f), 0.0f));
 
             //Can't deactivate the bomb temporarily, as it causes coroutines to stop which are necessary for various initialization sequences of modules, widgets, etc!
             //So instead of SetActive(false), move it to somewhere offscreen a long way away, and *hope* for the best!
             transform.position = OFFSCREEN_POSITION;
         }
 
+        /// <summary>
+        /// Attaches this bomb to the conveyor belt at the given node.
+        /// </summary>
+        /// <remarks>
+        /// Ensure that the bomb has had SetupStartPosition() called beforehand to setup the initial position.
+        /// </remarks>
         public void AttachToConveyor(Transform conveyorBeltNode)
         {
             transform.position = _targetStartPosition;
@@ -70,16 +95,33 @@ namespace FactoryAssembly
             ChangeTimerVisibility(false);
         }
 
+        /// <summary>
+        /// Manually starts the bomb, if the bomb's normal behavior is overridden.
+        /// </summary>
         public void StartBomb()
         {
             StartCoroutine(StartBombCoroutine());
         }
 
+        /// <summary>
+        /// Manually enables the bomb.
+        /// </summary>
+        public void EnableBomb()
+        {
+            SetSelectableLayer(true);
+        }
+
+        /// <summary>
+        /// Manually disables the bomb.
+        /// </summary>
         public void DisableBomb()
         {
             SetSelectableLayer(false);
         }
 
+        /// <summary>
+        /// Manually 'ends' the bomb, although that is a loose term.
+        /// </summary>
         public void EndBomb()
         {
             //Can't destroy the bomb, as it causes problems when trying to leave the gameplay room after defusal, as it needs the bomb for the time remaining value!
