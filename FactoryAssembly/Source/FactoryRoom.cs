@@ -95,8 +95,7 @@ namespace FactoryAssembly
 
             VanillaBombSpawn = transform.Find(VANILLA_BOMB_SPAWN_NAME);
 
-            //TODO: Determine gamemode
-            _gameMode = gameObject.AddComponent<FiniteSequenceMode>();
+            _gameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject);
             QuickDelay(() => _gameMode.Setup(this));
 
             OnLightChange(false);
