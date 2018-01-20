@@ -4,7 +4,7 @@ This mod provides a gameplay room resembling a factory-style production line for
 
 ## This is a Work In Progress Mod!
 
-As it stands, this mod is under large development, and functionality can and will change drastically between version releases to Steam and/or here. Expect there to be teething problems while under development.
+As it stands, this mod is under large development, and functionality can and will change drastically between version releases to Steam and/or here. Expect there to be teething problems while under development. Keep track of progress on this project on the [project's kanban](https://github.com/ashbash1987/ktanemod-factory/projects/1) - all the tasks listed are priority ordered, with top-most being highest priority.
 
 ## But why is it already released? Why not develop it fully before releasing it?
 
