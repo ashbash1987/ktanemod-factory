@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\API\APIProperties.cs" />
+    <Compile Include="Source\Calendar.cs" />
     <Compile Include="Source\Extensions\EnumExtensions.cs" />
     <Compile Include="Source\FactoryBomb.cs" />
     <Compile Include="Source\FactoryRoom.cs" />
