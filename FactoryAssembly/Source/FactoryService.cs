@@ -5,11 +5,15 @@ namespace FactoryAssembly
     public class FactoryService : MonoBehaviour
     {
         private KMGameInfo _gameInfo = null;
+        private APIProperties _properties = null;
 
         private void Awake()
         {
             _gameInfo = GetComponent<KMGameInfo>();
             _gameInfo.OnStateChange += OnStateChange;
+
+            _properties = GetComponentInChildren<APIProperties>();
+            _properties.Add("SupportedModes", () => FactoryGameModePicker.GetModeNames, null);
         }
 
         private void OnDestroy()

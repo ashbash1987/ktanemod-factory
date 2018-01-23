@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\API\APIProperties.cs" />
+    <Compile Include="Source\Extensions\EnumExtensions.cs" />
     <Compile Include="Source\FactoryBomb.cs" />
     <Compile Include="Source\FactoryRoom.cs" />
     <Compile Include="Source\FactoryRoomData.cs" />
@@ -63,7 +65,9 @@
     <Compile Include="Source\GameModes\FactoryGameModePicker.cs" />
     <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />
     <Compile Include="Source\GameModes\FactoryGameMode.cs" />
+    <Compile Include="Source\GameModes\GameModeTypeAttribute.cs" />
     <Compile Include="Source\GameModes\StaticMode.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

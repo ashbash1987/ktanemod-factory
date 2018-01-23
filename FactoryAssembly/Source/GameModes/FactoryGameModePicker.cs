@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Missions;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,25 @@ namespace FactoryAssembly
     {
         public enum GameMode
         {
+            [GameModeType(typeof(StaticMode), "Static Mode")]
             Static,
+
+            [GameModeType(typeof(FiniteSequenceMode), "Finite Sequence Mode")]
             FiniteSequence
+        }
+
+        public static string[] GetModeNames
+        {
+            get
+            {
+                List<string> modeNames = new List<string>();
+                foreach (GameMode gameMode in Enum.GetValues(typeof(GameMode)))
+                {
+                    modeNames.Add(gameMode.GetAttributeOfType<GameModeTypeAttribute>().FriendlyName);
+                }
+
+                return modeNames.ToArray();
+            }
         }
 
         private const string FACTORY_MODE_POOL_ID = "Factory Mode";
@@ -51,16 +69,15 @@ namespace FactoryAssembly
 
         private static FactoryGameMode CreateGameMode(GameMode gameMode, GameObject gameObject)
         {
-            switch (gameMode)
+            GameModeTypeAttribute attribute = gameMode.GetAttributeOfType<GameModeTypeAttribute>();
+
+            if (attribute != null)
             {
-                case GameMode.Static:
-                    return gameObject.AddComponent<StaticMode>();
-
-                case GameMode.FiniteSequence:
-                    return gameObject.AddComponent<FiniteSequenceMode>();
-
-                default:
-                    return gameObject.AddComponent<StaticMode>();
+                return gameObject.AddComponent(attribute.Type) as FactoryGameMode;
+            }
+            else
+            {
+                return gameObject.AddComponent<StaticMode>();
             }
         }
     
