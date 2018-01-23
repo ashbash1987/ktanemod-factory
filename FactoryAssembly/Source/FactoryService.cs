@@ -26,6 +26,11 @@ namespace FactoryAssembly
                     break;
 
                 case KMGameInfo.State.Gameplay:
+                    //If going into a custom mission, we must ensure the custom component pool is gone before we start, otherwise problems happen!
+                    if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID)
+                    {
+                        FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true);
+                    }
                     break;
 
                 default:

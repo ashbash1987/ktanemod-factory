@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\FactoryBomb.cs" />
     <Compile Include="Source\FactoryRoom.cs" />
+    <Compile Include="Source\FactoryRoomData.cs" />
     <Compile Include="Source\FactoryService.cs" />
     <Compile Include="Source\GameModes\FactoryGameModePicker.cs" />
     <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />

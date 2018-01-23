@@ -19,10 +19,15 @@ namespace FactoryAssembly
         {
             foreach (ModMission mission in ModManager.Instance.ModMissions)
             {
-                if (!_discoveredMissions.ContainsKey(mission.ID))
-                {
-                    _discoveredMissions[mission.ID] = GetGameModeForMission(mission);
-                }
+                UpdateMission(mission);
+            }
+        }
+
+        public static void UpdateMission(Mission mission, bool force = false)
+        {
+            if (!_discoveredMissions.ContainsKey(mission.ID) || force)
+            {
+                _discoveredMissions[mission.ID] = GetGameModeForMission(mission);
             }
         }
 
@@ -31,11 +36,6 @@ namespace FactoryAssembly
             if (missionID.Equals(FreeplayMissionGenerator.FREEPLAY_MISSION_ID))
             {
                 return gameObject.AddComponent<FiniteSequenceMode>();
-            }
-            else if (missionID.Equals(ModMission.CUSTOM_MISSION_ID))
-            {
-                GameMode gameMode = GetGameModeForMission(GameplayState.CustomMission);
-                return CreateGameMode(gameMode, gameObject);
             }
             else
             {
