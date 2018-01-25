@@ -13,7 +13,10 @@ namespace FactoryAssembly
             Static,
 
             [GameModeType(typeof(FiniteSequenceMode), "Finite Sequence Mode")]
-            FiniteSequence
+            FiniteSequence,
+
+            [GameModeType(typeof(InfiniteSequenceMode), "Infinite Sequence Mode")]
+            InfiniteSequence
         }
 
         public static string[] GetModeNames
@@ -31,6 +34,7 @@ namespace FactoryAssembly
         }
 
         private const string FACTORY_MODE_POOL_ID = "Factory Mode";
+        private const string MULTIPLE_BOMBS_POOL_ID = "Multiple Bombs";
         private static Dictionary<string, GameMode> _discoveredMissions = new Dictionary<string, GameMode>();
 
         public static void UpdateCompatibleMissions()
@@ -41,11 +45,11 @@ namespace FactoryAssembly
             }
         }
 
-        public static void UpdateMission(Mission mission, bool force = false)
+        public static void UpdateMission(Mission mission, bool force = false, bool tidyOtherComponents = false)
         {
             if (!_discoveredMissions.ContainsKey(mission.ID) || force)
             {
-                _discoveredMissions[mission.ID] = GetGameModeForMission(mission);
+                _discoveredMissions[mission.ID] = GetGameModeForMission(mission, tidyOtherComponents);
             }
         }
 
@@ -81,19 +85,36 @@ namespace FactoryAssembly
             }
         }
     
-        private static GameMode GetGameModeForMission(Mission mission)
+        private static GameMode GetGameModeForMission(Mission mission, bool tidyOtherComponents)
         {
             GameMode gameMode = GameMode.Static;
 
             for (int componentPoolIndex = mission.GeneratorSetting.ComponentPools.Count - 1; componentPoolIndex >= 0; componentPoolIndex--)
             {
                 ComponentPool pool = mission.GeneratorSetting.ComponentPools[componentPoolIndex];
-                if (pool.ModTypes != null && pool.ModTypes.Count == 1 && pool.ModTypes[0] == FACTORY_MODE_POOL_ID)
+                if (pool.ModTypes != null && pool.ModTypes.Count == 1)
                 {
-                    mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
+                    switch (pool.ModTypes[0])
+                    {
+                        case FACTORY_MODE_POOL_ID:
+                            mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
 
-                    int factoryModeIndex = pool.Count;
-                    gameMode = (GameMode)factoryModeIndex;
+                            int factoryModeIndex = pool.Count;
+                            gameMode = (GameMode)factoryModeIndex;
+                            break;
+
+                        case MULTIPLE_BOMBS_POOL_ID:
+                            //This is here to "fix" custom missions with multiple-bombs pools also added to them when trying to manually generate additional bombs for 'infinite' modes
+                            if (tidyOtherComponents)
+                            {
+                                mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                    
                 }
             }
 

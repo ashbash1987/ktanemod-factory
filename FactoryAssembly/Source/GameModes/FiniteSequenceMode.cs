@@ -9,7 +9,8 @@ namespace FactoryAssembly
 {
     public class FiniteSequenceMode : FactoryGameMode
     {
-        private Queue<FactoryBomb> _bombs = new Queue<FactoryBomb>();
+        protected Queue<FactoryBomb> _bombQueue = new Queue<FactoryBomb>();
+
         private FactoryBomb _currentBomb = null;
         private FactoryBomb _oldBomb = null;
 
@@ -37,7 +38,7 @@ namespace FactoryAssembly
             foreach (FactoryBomb bomb in Bombs)
             {
                 bomb.SetupStartPosition(Room.InitialSpawn);
-                _bombs.Enqueue(bomb);
+                _bombQueue.Enqueue(bomb);
             }
 
             _roomSelectable = Room.RoomSelectable;
@@ -70,6 +71,26 @@ namespace FactoryAssembly
                 _oldBomb.EndBomb();
                 _oldBomb = null;
             }
+        }
+
+        /// <summary>
+        /// Requests the next bomb to show up.
+        /// </summary>
+        protected virtual void GetNextBomb()
+        {
+            _oldBomb = _currentBomb;
+
+            if (_bombQueue.Count != 0)
+            {
+                _currentBomb = _bombQueue.Dequeue();
+                _currentBomb.AttachToConveyor(Room.GetNextConveyorNode());
+            }
+            else
+            {
+                _currentBomb = null;
+            }
+
+            Room.GetNextBomb();
         }
 
         /// <summary>
@@ -130,26 +151,6 @@ namespace FactoryAssembly
             _roomSelectable.DefaultSelectableIndex = roomDefaultSelectableIndex;
 
             SetSelectableBomb(null);
-        }
-
-        /// <summary>
-        /// Requests the next bomb to show up.
-        /// </summary>
-        private void GetNextBomb()
-        {
-            _oldBomb = _currentBomb;
-
-            if (_bombs.Count != 0)
-            {
-                _currentBomb = _bombs.Dequeue();
-                _currentBomb.AttachToConveyor(Room.GetNextConveyorNode());
-            }
-            else
-            {
-                _currentBomb = null;
-            }
-
-            Room.GetNextBomb();
         }
 
         private void SetSelectableBomb(FactoryBomb bomb)

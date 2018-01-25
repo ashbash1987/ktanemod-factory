@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.Missions;
+using System;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 
 namespace FactoryAssembly
@@ -10,6 +12,7 @@ namespace FactoryAssembly
         /// Due to issues using custom assembly in Unity not exposing fields, have to discover things by name instead. Not the greatest option, but it works.
         /// </remarks>
         private static readonly string[] CONVEYOR_BELT_NODE_NAMES = { "ConveyorBeltNodeA", "ConveyorBeltNodeB" };
+        private static readonly string INITIAL_SPAWN_NODE_NAME = "InitialSpawn";
         private static readonly string LEFT_DOOR_NAME = "LeftDoor";
         private static readonly string RIGHT_DOOR_NAME = "RightDoor";
         private static readonly string CONVEYOR_TOP_NAME = "ConveyorTop";
@@ -34,7 +37,7 @@ namespace FactoryAssembly
         {
             get
             {
-                return _conveyorBeltNodes[0];
+                return _initialSpawnNode;
             }
         }
 
@@ -48,8 +51,10 @@ namespace FactoryAssembly
         private Light[] _lights = null;
         private KMGameplayRoom _room = null;
         private KMAudio _audio = null;
+        private KMGameCommands _gameCommands = null;
 
         private Transform[] _conveyorBeltNodes = null;
+        private Transform _initialSpawnNode = null;
         private int _nextBeltNodeIndex = 0;
 
         private Transform _leftDoor = null;
@@ -70,6 +75,7 @@ namespace FactoryAssembly
             _lights = GetComponentsInChildren<Light>();
             _room = GetComponent<KMGameplayRoom>();
             _audio = GetComponent<KMAudio>();
+            _gameCommands = GetComponent<KMGameCommands>();
 
             _room.OnLightChange += OnLightChange;
         }
@@ -88,6 +94,9 @@ namespace FactoryAssembly
             {
                 _conveyorBeltNodes[nodeIndex] = transform.Find(CONVEYOR_BELT_NODE_NAMES[nodeIndex]);
             }
+
+            //Get the initial spawn node
+            _initialSpawnNode = transform.Find(INITIAL_SPAWN_NODE_NAME);
 
             _leftDoor = transform.Find(LEFT_DOOR_NAME);
             _rightDoor = transform.Find(RIGHT_DOOR_NAME);
@@ -115,6 +124,70 @@ namespace FactoryAssembly
         {
             _conveyorBeltAnimator.SetTrigger("NextBomb");
             _audio.PlaySoundAtTransform(CONVEYOR_AUDIO_NAME, _conveyorTop);
+        }
+
+        public Bomb CreateBombWithCurrentMission()
+        {
+            return CreateBomb(GameplayState.MissionToLoad);
+        }
+
+        public Bomb CreateBomb(string missionID)
+        {
+            int seed = new System.Random().Next();
+            Bomb bomb = null;
+
+            //This mission wrapping is mainly trusted code from MultipleBombs; I presume missions are either null or in an unworkable condition by the gameplay state which is why this is necessary.
+            if (missionID.Equals(FreeplayMissionGenerator.FREEPLAY_MISSION_ID))
+            {
+                Mission freeplayMission = FreeplayMissionGenerator.Generate(GameplayState.FreeplaySettings);
+                MissionManager.Instance.MissionDB.AddMission(freeplayMission);
+
+                bomb = CreateBomb(missionID, seed);
+
+                MissionManager.Instance.MissionDB.Missions.Remove(freeplayMission);
+            }
+            else if (missionID.Equals(ModMission.CUSTOM_MISSION_ID))
+            {
+                Mission customMission = SceneManager.Instance.GameplayState.Mission;
+
+                //Make doubly sure that the custom mission doesn't have the special component pools in ("Multiple Bombs" included, in case bomb is generated with multiple bombs AND infinite mode!)
+                FactoryGameModePicker.UpdateMission(customMission, true, true);
+
+                string oldName = customMission.name;
+                customMission.name = ModMission.CUSTOM_MISSION_ID;
+                MissionManager.Instance.MissionDB.AddMission(customMission);
+
+                bomb = CreateBomb(missionID, seed);
+
+                MissionManager.Instance.MissionDB.Missions.Remove(customMission);
+                customMission.name = oldName;
+            }
+            else
+            {
+                bomb = CreateBomb(missionID, seed);
+            }
+
+            return bomb;
+        }
+
+        public Bomb CreateBomb(string missionID, int seed)
+        {
+            //Need to 'undo' RoundStarted to prevent the game from auto-starting the next bomb
+            bool roundStarted = SceneManager.Instance.GameplayState.RoundStarted;
+            PropertyInfo roundStartedProperty = typeof(GameplayState).GetProperty("RoundStarted", BindingFlags.Public | BindingFlags.Instance);
+            roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, false, null);
+
+            Bomb bomb =  _gameCommands.CreateBomb(missionID, null, VanillaBombSpawn.gameObject, seed.ToString()).GetComponent<Bomb>();
+
+            //Revert the RoundStarted value back to what it was
+            roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, roundStarted, null);
+
+            //Still need to do this to ensure the bomb can be selected properly later on
+            bomb.GetComponent<Selectable>().Parent = RoomSelectable;
+            KTInputManager.Instance.RootSelectable = RoomSelectable;
+            KTInputManager.Instance.SelectRootDefault();
+
+            return bomb;
         }
         #endregion
 
@@ -158,7 +231,7 @@ namespace FactoryAssembly
                 }
                 else
                 {
-                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzz, 1.0f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzz, 1.5f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
                 }
             }
         }
@@ -185,7 +258,7 @@ namespace FactoryAssembly
             RenderSettings.ambientIntensity = 0.0f;
             DynamicGI.UpdateEnvironment();
         }
-       
+
         #region Animation Methods
         /// <summary>
         /// Starts the 'current' bomb.

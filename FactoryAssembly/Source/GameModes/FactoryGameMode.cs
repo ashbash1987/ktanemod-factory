@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Missions;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FactoryAssembly
@@ -13,22 +14,23 @@ namespace FactoryAssembly
 
         protected IEnumerable<FactoryBomb> Bombs
         {
-            get;
-            private set;
+            get
+            {
+                return _bombs;
+            }
         }
+
+        private List<FactoryBomb> _bombs = new List<FactoryBomb>();
 
         public virtual void Setup(FactoryRoom room)
         {
             Room = room;
 
             List<Bomb> bombs = SceneManager.Instance.GameplayState.Bombs;
-            List<FactoryBomb> factoryBombs = new List<FactoryBomb>();
             foreach (Bomb bomb in bombs)
             {
-                factoryBombs.Add(bomb.gameObject.AddComponent<FactoryBomb>());
+                _bombs.Add(bomb.gameObject.AddComponent<FactoryBomb>());
             }
-
-            Bombs = factoryBombs;
         }
 
         /// <summary>
@@ -45,6 +47,15 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         public virtual void OnEndBomb()
         {
+        }
+
+        protected FactoryBomb AddAnotherBomb()
+        {
+            Bomb newBomb = Room.CreateBombWithCurrentMission();
+            FactoryBomb newFactoryBomb = newBomb.gameObject.AddComponent<FactoryBomb>();
+            _bombs.Add(newFactoryBomb);
+
+            return newFactoryBomb;
         }
     }
 }
