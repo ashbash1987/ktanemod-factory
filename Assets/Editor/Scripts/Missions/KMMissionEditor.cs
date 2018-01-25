@@ -142,8 +142,7 @@ public class KMMissionEditor : Editor
         EditorGUILayout.BeginHorizontal();
 
         //Count
-        componentPoolProperty.FindPropertyRelative("Count").intValue = Math.Min(EditorGUILayout.IntField(
-            componentPoolProperty.FindPropertyRelative("Count").intValue, GUILayout.Width(60)), 1);
+        componentPoolProperty.FindPropertyRelative("Count").intValue = Math.Max(EditorGUILayout.IntField(componentPoolProperty.FindPropertyRelative("Count").intValue, GUILayout.Width(60)), 1);
 
 
         //Summary of types in this pool
