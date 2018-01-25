@@ -9,11 +9,23 @@ namespace FactoryAssembly
         {
             get
             {
-                return _bomb.IsSolved() && _holdable.HoldState == FloatingHoldable.HoldStateEnum.Idle;
+                return InternalBomb.IsSolved() && _holdable.HoldState == FloatingHoldable.HoldStateEnum.Idle;
             }
         }
 
         public Selectable Selectable
+        {
+            get;
+            private set;
+        }
+
+        public Bomb InternalBomb
+        {
+            get;
+            private set;
+        }
+
+        public TimerComponent Timer
         {
             get;
             private set;
@@ -24,8 +36,6 @@ namespace FactoryAssembly
 
         private static readonly Vector3 OFFSCREEN_POSITION = new Vector3(0.0f, -1000.0f, 0.0f);
 
-        private Bomb _bomb = null;
-        private TimerComponent _timer = null;
         private FloatingHoldable _holdable = null;
         private SelectableArea _selectableArea = null;
         private Vector3 _targetStartPosition = Vector3.zero;
@@ -36,8 +46,8 @@ namespace FactoryAssembly
         /// </summary>
         private void Awake()
         {
-            _bomb = GetComponent<Bomb>();
-            _timer = _bomb.GetTimer();
+            InternalBomb = GetComponent<Bomb>();
+            Timer = InternalBomb.GetTimer();
             _holdable = GetComponentInChildren<FloatingHoldable>();
             _selectableArea = GetComponentInChildren<SelectableArea>();
             Selectable = GetComponent<Selectable>();
@@ -148,17 +158,17 @@ namespace FactoryAssembly
 
         private void ChangeTimerVisibility(bool on)
         {
-            _timer.text.gameObject.SetActive(on);
-            _timer.LightGlow.enabled = on;
+            Timer.text.gameObject.SetActive(on);
+            Timer.LightGlow.enabled = on;
         }
 
         private void ActivateBomb()
         {
-            _bomb.WidgetManager.ActivateAllWidgets();
+            InternalBomb.WidgetManager.ActivateAllWidgets();
 
-            if (!_bomb.HasDetonated)
+            if (!InternalBomb.HasDetonated)
             {
-                foreach (BombComponent component in _bomb.BombComponents)
+                foreach (BombComponent component in InternalBomb.BombComponents)
                 {
                     component.Activate();
                 }
@@ -167,7 +177,7 @@ namespace FactoryAssembly
 
         private void StartTimer()
         {
-            _timer.StartTimer();
+            Timer.StartTimer();
         }
 
         private void SetSelectableLayer(bool enable)

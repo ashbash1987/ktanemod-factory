@@ -9,14 +9,32 @@ namespace FactoryAssembly
     {
         public enum GameMode
         {
-            [GameModeType(typeof(StaticMode), "Static Mode")]
+            [GameModeType(typeof(StaticMode), "Static")]
             Static,
 
-            [GameModeType(typeof(FiniteSequenceMode), "Finite Sequence Mode")]
+            [GameModeType(typeof(FiniteSequenceMode), "Finite")]
             FiniteSequence,
 
-            [GameModeType(typeof(InfiniteSequenceMode), "Infinite Sequence Mode")]
-            InfiniteSequence
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time", typeof(GlobalTimerAdaptation))]
+            FiniteSequenceGlobalTime,
+
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Strikes", typeof(GlobalStrikesAdaptation))]
+            FiniteSequenceGlobalStrikes,
+
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time & Strikes", typeof(GlobalTimerAdaptation), typeof(GlobalStrikesAdaptation))]
+            FiniteSequenceGlobalTimeStrikes,
+
+            [GameModeType(typeof(InfiniteSequenceMode), "∞")]
+            InfiniteSequence,
+
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time", typeof(GlobalTimerAdaptation))]
+            InfiniteSequenceGlobalTime,
+
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Strikes", typeof(GlobalStrikesAdaptation))]
+            InfiniteSequenceGlobalStrikes,
+
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time & Strikes", typeof(GlobalTimerAdaptation), typeof(GlobalStrikesAdaptation))]
+            InfiniteSequenceGlobalTimeStrikes,
         }
 
         public static string[] GetModeNames
@@ -77,7 +95,17 @@ namespace FactoryAssembly
 
             if (attribute != null)
             {
-                return gameObject.AddComponent(attribute.Type) as FactoryGameMode;
+                FactoryGameMode factoryGameMode = gameObject.AddComponent(attribute.Type) as FactoryGameMode;
+
+                if (attribute.Adaptations != null)
+                {
+                    foreach (Type adaptationType in attribute.Adaptations)
+                    {
+                        factoryGameMode.AddAdaptation(adaptationType);
+                    }
+                }
+
+                return factoryGameMode;
             }
             else
             {

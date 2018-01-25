@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Missions;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +20,16 @@ namespace FactoryAssembly
             }
         }
 
+        protected IEnumerable<FactoryGameModeAdaptation> Adaptations
+        {
+            get
+            {
+                return _adaptations;
+            }
+        }
+
         private List<FactoryBomb> _bombs = new List<FactoryBomb>();
+        private List<FactoryGameModeAdaptation> _adaptations = new List<FactoryGameModeAdaptation>();
 
         public virtual void Setup(FactoryRoom room)
         {
@@ -31,6 +40,11 @@ namespace FactoryAssembly
             {
                 _bombs.Add(bomb.gameObject.AddComponent<FactoryBomb>());
             }
+        }
+
+        public void AddAdaptation(Type adpatationType)
+        {
+            _adaptations.Add(Activator.CreateInstance(adpatationType) as FactoryGameModeAdaptation);
         }
 
         /// <summary>

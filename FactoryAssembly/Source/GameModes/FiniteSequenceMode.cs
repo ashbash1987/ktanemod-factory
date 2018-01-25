@@ -90,6 +90,15 @@ namespace FactoryAssembly
                 _currentBomb = null;
             }
 
+            if (_currentBomb != null)
+            {
+                //For any adaptations, let them know a bomb has started
+                foreach (FactoryGameModeAdaptation adaptation in Adaptations)
+                {
+                    adaptation.OnStartBomb(_oldBomb, _currentBomb);
+                }
+            }
+
             Room.GetNextBomb();
         }
 
@@ -123,7 +132,7 @@ namespace FactoryAssembly
 
             GetNextBomb();
 
-            PropertyInfo roundStartedProperty = typeof(GameplayState).GetProperty("RoundStarted", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            PropertyInfo roundStartedProperty = typeof(GameplayState).GetProperty("RoundStarted", BindingFlags.Instance | BindingFlags.Public);
             roundStartedProperty.SetValue(gameplayState, true, null);
 
             FieldInfo paceMakerField = typeof(GameplayState).GetField("paceMaker", BindingFlags.Instance | BindingFlags.NonPublic);

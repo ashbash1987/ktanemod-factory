@@ -63,6 +63,9 @@
     <Compile Include="Source\FactoryRoom.cs" />
     <Compile Include="Source\FactoryRoomData.cs" />
     <Compile Include="Source\FactoryService.cs" />
+    <Compile Include="Source\GameModes\Adaptations\FactoryGameModeAdaptation.cs" />
+    <Compile Include="Source\GameModes\Adaptations\GlobalStrikesAdaptation.cs" />
+    <Compile Include="Source\GameModes\Adaptations\GlobalTimerAdaptation.cs" />
     <Compile Include="Source\GameModes\FactoryGameModePicker.cs" />
     <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />
     <Compile Include="Source\GameModes\FactoryGameMode.cs" />
