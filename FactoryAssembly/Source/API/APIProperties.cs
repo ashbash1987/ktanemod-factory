@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace FactoryAssembly
 {
+    /// <remarks>
+    /// Adapted from Lupo511's MultipleBombs' PropertiesBehaviour class: https://github.com/Lupo511/ktanemodkit/blob/MultipleBombs/ManagedAssembly/MultipleBombsAssembly/MultipleBombsAssembly/PropertiesBehaviour.cs
+    /// </remarks>
     public class APIProperties : MonoBehaviour, IDictionary<string, object>
     {
         private class Property
