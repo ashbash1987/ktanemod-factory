@@ -1,4 +1,7 @@
-﻿namespace FactoryAssembly
+﻿using System.Collections;
+using UnityEngine;
+
+namespace FactoryAssembly
 {
     public class InfiniteSequenceMode : FiniteSequenceMode
     {
@@ -16,6 +19,23 @@
             }
 
             base.GetNextBomb();
+
+            StartCoroutine(DelayDestroyBomb(_oldBomb));
+        }
+
+        private IEnumerator DelayDestroyBomb(FactoryBomb bomb)
+        {
+            if (bomb == null || bomb.InternalBomb == null)
+            {
+                yield break;
+            }
+
+            while (!bomb.Ended)
+            {
+                yield return null;
+            }
+
+            DestroyBomb(bomb);
         }
     }
 }

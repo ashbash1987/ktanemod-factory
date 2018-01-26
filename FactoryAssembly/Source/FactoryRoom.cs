@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Missions;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -156,6 +157,23 @@ namespace FactoryAssembly
             KTInputManager.Instance.SelectRootDefault();
 
             return bomb;
+        }
+
+        public void DestroyBomb(Bomb bomb)
+        {
+            GameplayState gameplayState = SceneManager.Instance.GameplayState;
+            List<Bomb> bombs = gameplayState.Bombs;
+
+            //Shift the bomb to be away from the front of the list (bomb at the front of the list only get deactivated, rather than destroyed)
+            if (bombs.Remove(bomb))
+            {
+                bombs.Add(bomb);
+            }
+
+            Logging.Log("Destroying bomb...");
+
+            //Call the remove the bomb actual
+            gameplayState.RemoveBomb(bomb);
         }
         #endregion
 

@@ -11,8 +11,8 @@ namespace FactoryAssembly
     {
         protected Queue<FactoryBomb> _bombQueue = new Queue<FactoryBomb>();
 
-        private FactoryBomb _currentBomb = null;
-        private FactoryBomb _oldBomb = null;
+        protected FactoryBomb _currentBomb = null;
+        protected FactoryBomb _oldBomb = null;
 
         private Selectable _roomSelectable = null;
         private Selectable[] _roomChildren = null;

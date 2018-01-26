@@ -31,6 +31,12 @@ namespace FactoryAssembly
             private set;
         }
 
+        public bool Ended
+        {
+            get;
+            private set;
+        }
+
         private const int NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX = 11;
         private const int DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX = 12;
 
@@ -46,6 +52,8 @@ namespace FactoryAssembly
         /// </summary>
         private void Awake()
         {
+            Ended = false;
+
             InternalBomb = GetComponent<Bomb>();
             Timer = InternalBomb.GetTimer();
             _holdable = GetComponentInChildren<FloatingHoldable>();
@@ -53,7 +61,7 @@ namespace FactoryAssembly
             Selectable = GetComponent<Selectable>();
 
             ChangeTimerVisibility(false);
-            SetSelectableLayer(false);
+            SetSelectableLayer(false);            
         }
         #endregion
 
@@ -138,6 +146,7 @@ namespace FactoryAssembly
             //So instead of DestroyObject(..), move it to somewhere offscreen a long way away, and *hope* for the best!
             transform.SetParent(null, true);
             transform.position = OFFSCREEN_POSITION;
+            Ended = true;
         }
         #endregion
 

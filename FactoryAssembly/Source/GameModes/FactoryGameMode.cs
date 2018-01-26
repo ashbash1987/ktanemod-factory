@@ -71,5 +71,11 @@ namespace FactoryAssembly
 
             return newFactoryBomb;
         }
+
+        protected void DestroyBomb(FactoryBomb bomb)
+        {
+            _bombs.Remove(bomb);
+            Room.DestroyBomb(bomb.InternalBomb);
+        }
     }
 }
