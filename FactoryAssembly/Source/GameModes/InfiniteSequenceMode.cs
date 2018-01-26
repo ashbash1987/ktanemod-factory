@@ -1,7 +1,4 @@
-﻿
-using System.Collections;
-
-namespace FactoryAssembly
+﻿namespace FactoryAssembly
 {
     public class InfiniteSequenceMode : FiniteSequenceMode
     {

@@ -66,12 +66,16 @@
     <Compile Include="Source\GameModes\Adaptations\FactoryGameModeAdaptation.cs" />
     <Compile Include="Source\GameModes\Adaptations\GlobalStrikesAdaptation.cs" />
     <Compile Include="Source\GameModes\Adaptations\GlobalTimerAdaptation.cs" />
+    <Compile Include="Source\GameModes\FactoryGameModeEnumeration.cs" />
     <Compile Include="Source\GameModes\FactoryGameModePicker.cs" />
     <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />
     <Compile Include="Source\GameModes\FactoryGameMode.cs" />
     <Compile Include="Source\GameModes\GameModeTypeAttribute.cs" />
     <Compile Include="Source\GameModes\InfiniteSequenceMode.cs" />
     <Compile Include="Source\GameModes\StaticMode.cs" />
+    <Compile Include="Source\Helpers\Logging.cs" />
+    <Compile Include="Source\Helpers\ReflectionHelper.cs" />
+    <Compile Include="Source\MultipleBombsInterface.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

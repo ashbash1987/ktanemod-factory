@@ -133,51 +133,19 @@ namespace FactoryAssembly
 
         public Bomb CreateBomb(string missionID)
         {
-            int seed = new System.Random().Next();
-            Bomb bomb = null;
-
-            //This mission wrapping is mainly trusted code from MultipleBombs; I presume missions are either null or in an unworkable condition by the gameplay state which is why this is necessary.
-            if (missionID.Equals(FreeplayMissionGenerator.FREEPLAY_MISSION_ID))
+            //Protection in case MultipleBombs cannot be accessed
+            if (!MultipleBombsInterface.CanAccess)
             {
-                Mission freeplayMission = FreeplayMissionGenerator.Generate(GameplayState.FreeplaySettings);
-                MissionManager.Instance.MissionDB.AddMission(freeplayMission);
-
-                bomb = CreateBomb(missionID, seed);
-
-                MissionManager.Instance.MissionDB.Missions.Remove(freeplayMission);
-            }
-            else if (missionID.Equals(ModMission.CUSTOM_MISSION_ID))
-            {
-                Mission customMission = SceneManager.Instance.GameplayState.Mission;
-
-                //Make doubly sure that the custom mission doesn't have the special component pools in ("Multiple Bombs" included, in case bomb is generated with multiple bombs AND infinite mode!)
-                FactoryGameModePicker.UpdateMission(customMission, true, true);
-
-                string oldName = customMission.name;
-                customMission.name = ModMission.CUSTOM_MISSION_ID;
-                MissionManager.Instance.MissionDB.AddMission(customMission);
-
-                bomb = CreateBomb(missionID, seed);
-
-                MissionManager.Instance.MissionDB.Missions.Remove(customMission);
-                customMission.name = oldName;
-            }
-            else
-            {
-                bomb = CreateBomb(missionID, seed);
+                return null;
             }
 
-            return bomb;
-        }
-
-        public Bomb CreateBomb(string missionID, int seed)
-        {
             //Need to 'undo' RoundStarted to prevent the game from auto-starting the next bomb
             bool roundStarted = SceneManager.Instance.GameplayState.RoundStarted;
             PropertyInfo roundStartedProperty = typeof(GameplayState).GetProperty("RoundStarted", BindingFlags.Public | BindingFlags.Instance);
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, false, null);
 
-            Bomb bomb =  _gameCommands.CreateBomb(missionID, null, VanillaBombSpawn.gameObject, seed.ToString()).GetComponent<Bomb>();
+            //Interact with MultipleBombs to generate us a bomb
+            Bomb bomb = MultipleBombsInterface.CreateBomb(missionID, VanillaBombSpawn);
 
             //Revert the RoundStarted value back to what it was
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, roundStarted, null);
@@ -205,6 +173,7 @@ namespace FactoryAssembly
             delayCallable();
         }
 
+        #region Lighting Methods
         /// <summary>
         /// Called by KMGameplayRoom on lighting change pacing events.
         /// </summary>
@@ -258,6 +227,7 @@ namespace FactoryAssembly
             RenderSettings.ambientIntensity = 0.0f;
             DynamicGI.UpdateEnvironment();
         }
+        #endregion
 
         #region Animation Methods
         /// <summary>
