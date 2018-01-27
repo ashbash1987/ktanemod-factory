@@ -36,6 +36,7 @@ ModelImporter:
     100056: Roller_014
     100058: RollerWall
     100060: RollerWall_001
+    100062: Truss
     400000: ConveyorPlaceholder
     400002: ConveyorPlaceholderTop
     400004: //RootNode
@@ -67,6 +68,7 @@ ModelImporter:
     400056: Roller_014
     400058: RollerWall
     400060: RollerWall_001
+    400062: Truss
     2300000: ConveyorPlaceholder
     2300002: ConveyorPlaceholderTop
     2300004: Room
@@ -97,6 +99,7 @@ ModelImporter:
     2300054: Roller_014
     2300056: RollerWall
     2300058: RollerWall_001
+    2300060: Truss
     3300000: ConveyorPlaceholder
     3300002: ConveyorPlaceholderTop
     3300004: Room
@@ -127,6 +130,7 @@ ModelImporter:
     3300054: Roller_014
     3300056: RollerWall
     3300058: RollerWall_001
+    3300060: Truss
     4300000: ConveyorPlaceholderTop
     4300002: ConveyorPlaceholder
     4300004: Room
@@ -157,6 +161,7 @@ ModelImporter:
     4300054: Roller_001
     4300056: RollerWall_001
     4300058: RollerWall
+    4300060: Truss
     7400000: Default Take
     9500000: //RootNode
   materials:
