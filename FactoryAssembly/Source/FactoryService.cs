@@ -41,10 +41,11 @@ namespace FactoryAssembly
                     if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID && _fromSetupRoom)
                     {
                         FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true, false, true);
-                        _fromSetupRoom = false;
 
                         StartCoroutine(FixCustomMission());
+
                     }
+                    _fromSetupRoom = false;
                     break;
 
                 default:

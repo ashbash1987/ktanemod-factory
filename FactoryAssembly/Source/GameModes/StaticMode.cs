@@ -5,6 +5,14 @@ namespace FactoryAssembly
 {
     public class StaticMode : FactoryGameMode
     {
+        public override float RemainingTime
+        {
+            get
+            {
+                return Bombs.Min((x) => x.Timer.TimeRemaining);
+            }
+        }
+
         private const float SPAWN_LENGTH = 3.0f;
         private const float MAXIMUM_BOMB_SPACING = 0.6f;
 

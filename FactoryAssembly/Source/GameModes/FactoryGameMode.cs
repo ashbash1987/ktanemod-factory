@@ -6,6 +6,11 @@ namespace FactoryAssembly
 {
     public abstract class FactoryGameMode : MonoBehaviour
     {
+        public abstract float RemainingTime
+        {
+            get;
+        }
+
         protected FactoryRoom Room
         {
             get;

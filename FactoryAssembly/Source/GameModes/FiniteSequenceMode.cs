@@ -9,6 +9,19 @@ namespace FactoryAssembly
 {
     public class FiniteSequenceMode : FactoryGameMode
     {
+        public override float RemainingTime
+        {
+            get
+            {
+                if (_currentBomb != null)
+                {
+                    return _currentBomb.Timer.TimeRemaining;
+                }
+
+                return float.PositiveInfinity;
+            }
+        }
+
         protected Queue<FactoryBomb> _bombQueue = new Queue<FactoryBomb>();
 
         protected FactoryBomb _currentBomb = null;

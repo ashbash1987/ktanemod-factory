@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Missions;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,25 +8,6 @@ namespace FactoryAssembly
 {
     public class FactoryRoom : MonoBehaviour
     {
-        /// <remarks>
-        /// Due to issues using custom assembly in Unity not exposing fields, have to discover things by name instead. Not the greatest option, but it works.
-        /// </remarks>
-        private static readonly string[] CONVEYOR_BELT_NODE_NAMES = { "ConveyorBeltNodeA", "ConveyorBeltNodeB" };
-        private static readonly string INITIAL_SPAWN_NODE_NAME = "InitialSpawn";
-        private static readonly string LEFT_DOOR_NAME = "LeftDoor";
-        private static readonly string RIGHT_DOOR_NAME = "RightDoor";
-        private static readonly string CONVEYOR_TOP_NAME = "ConveyorTop";
-        private static readonly string DOOR_LONG_AUDIO_NAME = "DoorLong";
-        private static readonly string DOOR_SHORT_AUDIO_NAME = "DoorShort";
-        private static readonly string CONVEYOR_AUDIO_NAME = "Conveyor";
-        private static readonly string VANILLA_BOMB_SPAWN_NAME = "Spawns/BombSpawn";
-
-        private static readonly Color AMBIENT_OFF_COLOR = new Color(0.01f, 0.01f, 0.01f);
-        private static readonly Color AMBIENT_ON_COLOR = new Color(0.4f, 0.4f, 0.4f);
-
-        private const float LIGHT_OFF_INTENSITY = 0.02f;
-        private const float LIGHT_ON_INTENSITY = 0.8f;
-
         public Selectable RoomSelectable
         {
             get;
@@ -38,31 +18,29 @@ namespace FactoryAssembly
         {
             get
             {
-                return _initialSpawnNode;
+                return _data.InitialSpawn;
             }
         }
 
         public Transform VanillaBombSpawn
         {
-            get;
-            private set;
+            get
+            {
+                return _data.VanillaBombSpawn;
+            }
         }
 
+        private FactoryRoomData _data = null;
+
         private Animator _conveyorBeltAnimator = null;
-        private Light[] _lights = null;
         private KMGameplayRoom _room = null;
         private KMAudio _audio = null;
         private KMGameCommands _gameCommands = null;
 
-        private Transform[] _conveyorBeltNodes = null;
-        private Transform _initialSpawnNode = null;
         private int _nextBeltNodeIndex = 0;
 
-        private Transform _leftDoor = null;
-        private Transform _rightDoor = null;
-        private Transform _conveyorTop = null;
-
         private bool _initialSwitchOn = true;
+        private bool _lightsOn = false;
 
         private FactoryGameMode _gameMode = null;
 
@@ -72,8 +50,9 @@ namespace FactoryAssembly
         /// </summary>
         private void Awake()
         {
+            _data = GetComponent<FactoryRoomData>();
+
             _conveyorBeltAnimator = GetComponent<Animator>();
-            _lights = GetComponentsInChildren<Light>();
             _room = GetComponent<KMGameplayRoom>();
             _audio = GetComponent<KMAudio>();
             _gameCommands = GetComponent<KMGameCommands>();
@@ -89,34 +68,26 @@ namespace FactoryAssembly
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
             RoomSelectable = gameplayState.Room.GetComponent<Selectable>();
 
-            //Get the conveyor belt nodes
-            _conveyorBeltNodes = new Transform[CONVEYOR_BELT_NODE_NAMES.Length];
-            for (int nodeIndex = 0; nodeIndex < CONVEYOR_BELT_NODE_NAMES.Length; ++nodeIndex)
-            {
-                _conveyorBeltNodes[nodeIndex] = transform.Find(CONVEYOR_BELT_NODE_NAMES[nodeIndex]);
-            }
-
-            //Get the initial spawn node
-            _initialSpawnNode = transform.Find(INITIAL_SPAWN_NODE_NAME);
-
-            _leftDoor = transform.Find(LEFT_DOOR_NAME);
-            _rightDoor = transform.Find(RIGHT_DOOR_NAME);
-            _conveyorTop = transform.Find(CONVEYOR_TOP_NAME);
-
-            VanillaBombSpawn = transform.Find(VANILLA_BOMB_SPAWN_NAME);
-
             _gameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject);
             QuickDelay(() => _gameMode.Setup(this));
 
             OnLightChange(false);
+        }
+
+        /// <summary>
+        /// Unity event.
+        /// </summary>
+        private void Update()
+        {
+            UpdateLighting();
         }
         #endregion
 
         #region Public Methods
         public Transform GetNextConveyorNode()
         {
-            Transform nextNode = _conveyorBeltNodes[_nextBeltNodeIndex];
-            _nextBeltNodeIndex = (_nextBeltNodeIndex + 1) % _conveyorBeltNodes.Length;
+            Transform nextNode = _data.ConveyorBeltNodes[_nextBeltNodeIndex];
+            _nextBeltNodeIndex = (_nextBeltNodeIndex + 1) % _data.ConveyorBeltNodes.Length;
 
             return nextNode;
         }
@@ -124,7 +95,7 @@ namespace FactoryAssembly
         public void GetNextBomb()
         {
             _conveyorBeltAnimator.SetTrigger("NextBomb");
-            _audio.PlaySoundAtTransform(CONVEYOR_AUDIO_NAME, _conveyorTop);
+            _audio.PlaySoundAtTransform(_data.ConveyorAudio.name, _data.ConveyorTop);
         }
 
         public Bomb CreateBombWithCurrentMission()
@@ -146,7 +117,7 @@ namespace FactoryAssembly
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, false, null);
 
             //Interact with MultipleBombs to generate us a bomb
-            Bomb bomb = MultipleBombsInterface.CreateBomb(missionID, VanillaBombSpawn);
+            Bomb bomb = MultipleBombsInterface.CreateBomb(missionID, _data.VanillaBombSpawn);
 
             //Revert the RoundStarted value back to what it was
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, roundStarted, null);
@@ -192,6 +163,26 @@ namespace FactoryAssembly
         }
 
         #region Lighting Methods
+        private void UpdateLighting()
+        {
+            bool warningTime = _gameMode != null ? (_gameMode.RemainingTime < _data.WarningTime) : false;
+
+            float lightIntensity = _lightsOn ? (warningTime ? _data.LightWarningIntensity : _data.LightOnIntensity) : _data.LightOffIntensity;
+            Color ambientColor = _lightsOn ? (warningTime ? _data.AmbientWarningColor : _data.AmbientOnColor) : _data.AmbientOffColor;
+
+            _data.WarningLight.gameObject.SetActive(warningTime);
+
+            foreach (Light light in _data.NormalLights)
+            {
+                light.intensity = lightIntensity;
+            }
+
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+            RenderSettings.ambientLight = ambientColor;
+            RenderSettings.ambientIntensity = 0.0f;
+            DynamicGI.UpdateEnvironment();
+        }
+
         /// <summary>
         /// Called by KMGameplayRoom on lighting change pacing events.
         /// </summary>
@@ -202,28 +193,28 @@ namespace FactoryAssembly
             {
                 if (on)
                 {
-                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.Switch, 0.0f, LIGHT_ON_INTENSITY, AMBIENT_ON_COLOR));
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.Switch, 0.0f, on));
                     _initialSwitchOn = false;
                 }
                 else
                 {
-                    StartCoroutine(ChangeLightIntensity(null, 0.0f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
+                    StartCoroutine(ChangeLightIntensity(null, 0.0f, on));
                 }
             }
             else
             {
                 if (on)
                 {
-                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzzShort, 0.5f, LIGHT_ON_INTENSITY, AMBIENT_ON_COLOR));
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzzShort, 0.5f, on));
                 }
                 else
                 {
-                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzz, 1.5f, LIGHT_OFF_INTENSITY, AMBIENT_OFF_COLOR));
+                    StartCoroutine(ChangeLightIntensity(KMSoundOverride.SoundEffect.LightBuzz, 1.5f, on));
                 }
             }
         }
 
-        private IEnumerator ChangeLightIntensity(KMSoundOverride.SoundEffect? sound, float wait, float lightIntensity, Color ambientColor)
+        private IEnumerator ChangeLightIntensity(KMSoundOverride.SoundEffect? sound, float wait, bool lightState)
         {
             if (sound.HasValue)
             {
@@ -235,15 +226,7 @@ namespace FactoryAssembly
                 yield return new WaitForSeconds(wait);
             }
 
-            foreach (Light light in _lights)
-            {
-                light.intensity = lightIntensity;
-            }
-
-            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
-            RenderSettings.ambientLight = ambientColor;
-            RenderSettings.ambientIntensity = 0.0f;
-            DynamicGI.UpdateEnvironment();
+            _lightsOn = lightState;            
         }
         #endregion
 
@@ -272,7 +255,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void DoorLeftOpen()
         {
-            _audio.PlaySoundAtTransform(DOOR_LONG_AUDIO_NAME, _leftDoor);
+            _audio.PlaySoundAtTransform(_data.DoorLongAudio.name, _data.LeftDoor);
         }
 
         /// <summary>
@@ -281,7 +264,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void DoorLeftClose()
         {
-            _audio.PlaySoundAtTransform(DOOR_SHORT_AUDIO_NAME, _leftDoor);
+            _audio.PlaySoundAtTransform(_data.DoorShortAudio.name, _data.LeftDoor);
         }
 
         /// <summary>
@@ -290,7 +273,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void DoorRightOpen()
         {
-            _audio.PlaySoundAtTransform(DOOR_SHORT_AUDIO_NAME, _rightDoor);
+            _audio.PlaySoundAtTransform(_data.DoorShortAudio.name, _data.RightDoor);
         }
 
         /// <summary>
@@ -299,7 +282,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void DoorRightClose()
         {
-            _audio.PlaySoundAtTransform(DOOR_LONG_AUDIO_NAME, _rightDoor);
+            _audio.PlaySoundAtTransform(_data.DoorLongAudio.name, _data.RightDoor);
         }
         #endregion
         #endregion

@@ -22,7 +22,7 @@ namespace FactoryAssembly
             {
                 return e.Types.Where(x => x != null);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
