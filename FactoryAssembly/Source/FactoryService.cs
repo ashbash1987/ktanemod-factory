@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace FactoryAssembly
 {
@@ -37,18 +38,31 @@ namespace FactoryAssembly
                 case KMGameInfo.State.Gameplay:
                     Logging.Log("State Change: Gameplay");
 
-                    //If going into a custom mission, we must ensure the custom component pool is gone before we start, otherwise problems happen!
                     if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID && _fromSetupRoom)
-                    {                    
-                        FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true, true, true);
-
+                    {
+                        FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true, false, true);
                         _fromSetupRoom = false;
+
+                        StartCoroutine(FixCustomMission());
                     }
                     break;
 
                 default:
                     break;
             }
+        }
+
+        private IEnumerator FixCustomMission()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            string missionID = SceneManager.Instance.GameplayState.Mission.ID;
+            SceneManager.Instance.GameplayState.Mission.name = "__fixedCustomMission";
+            FactoryGameModePicker.UpdateMission(SceneManager.Instance.GameplayState.Mission, true, true, true);
+            SceneManager.Instance.GameplayState.Mission.name = missionID;
         }
     }
 }
