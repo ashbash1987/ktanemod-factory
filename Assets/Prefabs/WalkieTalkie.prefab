@@ -143,7 +143,9 @@ GameObject:
   - component: {fileID: 4241188172302834}
   - component: {fileID: 114096211414119972}
   - component: {fileID: 114922566258188784}
+  - component: {fileID: 114414782573775622}
   - component: {fileID: 54309602010013414}
+  - component: {fileID: 114388817647475642}
   m_Layer: 0
   m_Name: WalkieTalkie
   m_TagString: Untagged
@@ -499,6 +501,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0.01
+--- !u!114 &114388817647475642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1899836616733024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1212786925, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllAvailableExperts: {fileID: 8300000, guid: 265d07869cf3f4d419091a945c8912a8, type: 3}
+  AllAvailableExpertsTime: 117
+  Evacuate: {fileID: 8300000, guid: 0b129f63d35155545999dbda4e4ac9f0, type: 3}
+  EvacuateTime: 58
+  EmergencyCleared: {fileID: 8300000, guid: 0de599159a358514f891c9324a0988ac, type: 3}
+  Over: {fileID: 8300000, guid: 42ced06d37a2faa449cdd44bdc967b8e, type: 3}
+--- !u!114 &114414782573775622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1899836616733024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1675560866, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114428446804005276
 MonoBehaviour:
   m_ObjectHideFlags: 1

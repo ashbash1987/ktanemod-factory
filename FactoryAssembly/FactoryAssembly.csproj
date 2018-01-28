@@ -76,6 +76,7 @@
     <Compile Include="Source\Helpers\Logging.cs" />
     <Compile Include="Source\Helpers\ReflectionHelper.cs" />
     <Compile Include="Source\MultipleBombsInterface.cs" />
+    <Compile Include="Source\WalkieTalkie.cs" />
     <Compile Include="Source\WarningLight.cs" />
   </ItemGroup>
   <ItemGroup />
