@@ -7,6 +7,8 @@ namespace FactoryAssembly
     {
         private KMGameInfo _gameInfo = null;
         private APIProperties _properties = null;
+        private ResultBinderConverter _binderConverter = null;
+
         private bool _fromSetupRoom = false;
 
         private void Awake()
@@ -17,6 +19,8 @@ namespace FactoryAssembly
             _properties = GetComponentInChildren<APIProperties>();
             _properties.Add("SupportedModes", () => FactoryGameModePicker.GetModeNames, null);
             _properties.Add("EnabledModes", () => FactoryGameModePicker.GetModeSupport, null);
+
+            _binderConverter = GetComponent<ResultBinderConverter>();
         }
 
         private void OnDestroy()
@@ -30,9 +34,12 @@ namespace FactoryAssembly
             {
                 case KMGameInfo.State.Setup:
                     Logging.Log("State Change: Setup");
+
                     MultipleBombsInterface.RediscoverMultipleBombs();
                     FactoryGameModePicker.UpdateCompatibleMissions();
                     _fromSetupRoom = true;
+
+                    _binderConverter.Revert();
                     break;
 
                 case KMGameInfo.State.Gameplay:
@@ -46,6 +53,17 @@ namespace FactoryAssembly
 
                     }
                     _fromSetupRoom = false;
+
+                    _binderConverter.Revert();
+                    break;
+
+                case KMGameInfo.State.PostGame:
+                    Logging.Log("Stage Change: PostGame");
+
+                    if (ResultBinderSetup.EnableOverride)
+                    {
+                        _binderConverter.Convert();
+                    }
                     break;
 
                 default:
@@ -55,10 +73,10 @@ namespace FactoryAssembly
 
         private IEnumerator FixCustomMission()
         {
-            yield return null;
-            yield return null;
-            yield return null;
-            yield return null;
+            for (int frameCount = 0; frameCount < 4; ++frameCount)
+            {
+                yield return null;
+            }
 
             string missionID = SceneManager.Instance.GameplayState.Mission.ID;
             SceneManager.Instance.GameplayState.Mission.name = "__fixedCustomMission";

@@ -48,6 +48,8 @@ namespace FactoryAssembly
         {
             base.Setup(room);
 
+            ResultBinderSetup.EnableOverride = true;
+
             foreach (FactoryBomb bomb in Bombs)
             {
                 bomb.SetupStartPosition(Room.InitialSpawn);

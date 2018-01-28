@@ -107,9 +107,10 @@ namespace FactoryAssembly
                 Logging.Log("Creating gamemode '{0}'.", attribute.FriendlyName);
                 FactoryGameMode factoryGameMode = gameObject.AddComponent(attribute.Type) as FactoryGameMode;
 
-                if (attribute.Adaptations != null)
+                Type[] adapations = gameMode.GetGameModeAdapations();
+                if (adapations != null)
                 {
-                    foreach (Type adaptationType in attribute.Adaptations)
+                    foreach (Type adaptationType in adapations)
                     {
                         factoryGameMode.AddAdaptation(adaptationType);
                     }

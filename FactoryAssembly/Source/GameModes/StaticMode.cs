@@ -20,6 +20,8 @@ namespace FactoryAssembly
         {
             base.Setup(room);
 
+            ResultBinderSetup.EnableOverride = false;
+
             FactoryBomb[] bombs = Bombs.ToArray();
 
             Vector3 vanillaBombSpawnPosition = Room.VanillaBombSpawn.position;

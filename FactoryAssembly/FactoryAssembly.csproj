@@ -70,8 +70,12 @@
     <Compile Include="Source\GameModes\FactoryGameModePicker.cs" />
     <Compile Include="Source\GameModes\FiniteSequenceMode.cs" />
     <Compile Include="Source\GameModes\FactoryGameMode.cs" />
+    <Compile Include="Source\GameModes\Adaptations\GameModeAdaptationAttribute.cs" />
     <Compile Include="Source\GameModes\GameModeTypeAttribute.cs" />
     <Compile Include="Source\GameModes\InfiniteSequenceMode.cs" />
+    <Compile Include="Source\GameModes\RequireMultipleBombsAttribute.cs" />
+    <Compile Include="Source\GameModes\ResultBinderConverters\ResultBinderSetup.cs" />
+    <Compile Include="Source\GameModes\ResultBinderConverters\ResultBinderConverter.cs" />
     <Compile Include="Source\GameModes\StaticMode.cs" />
     <Compile Include="Source\Helpers\Logging.cs" />
     <Compile Include="Source\Helpers\ReflectionHelper.cs" />

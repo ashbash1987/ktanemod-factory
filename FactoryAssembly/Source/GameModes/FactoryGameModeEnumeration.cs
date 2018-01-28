@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FactoryAssembly
 {
@@ -7,31 +8,43 @@ namespace FactoryAssembly
     {
         public enum GameMode
         {
-            [GameModeType(typeof(StaticMode), "Static", false)]
+            [GameModeType(typeof(StaticMode), "Static")]
             Static,
 
-            [GameModeType(typeof(FiniteSequenceMode), "Finite", false)]
+            [GameModeType(typeof(FiniteSequenceMode), "Finite")]
             FiniteSequence,
 
-            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time", false, typeof(GlobalTimerAdaptation))]
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time")]
+            [GameModeAdaptation(typeof(GlobalTimerAdaptation))]
             FiniteSequenceGlobalTime,
 
-            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Strikes", false, typeof(GlobalStrikesAdaptation))]
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Strikes")]
+            [GameModeAdaptation(typeof(GlobalStrikesAdaptation))]
             FiniteSequenceGlobalStrikes,
 
-            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time & Strikes", false, typeof(GlobalTimerAdaptation), typeof(GlobalStrikesAdaptation))]
+            [GameModeType(typeof(FiniteSequenceMode), "Finite + Global Time & Strikes")]
+            [GameModeAdaptation(typeof(GlobalTimerAdaptation))]
+            [GameModeAdaptation(typeof(GlobalStrikesAdaptation))]
             FiniteSequenceGlobalTimeStrikes,
 
-            [GameModeType(typeof(InfiniteSequenceMode), "∞", true)]
+            [GameModeType(typeof(InfiniteSequenceMode), "∞")]
+            [RequireMultipleBombs()]
             InfiniteSequence,
 
-            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time", true, typeof(GlobalTimerAdaptation))]
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time")]
+            [GameModeAdaptation(typeof(GlobalTimerAdaptation))]
+            [RequireMultipleBombs()]
             InfiniteSequenceGlobalTime,
 
-            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Strikes", true, typeof(GlobalStrikesAdaptation))]
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Strikes")]
+            [GameModeAdaptation(typeof(GlobalStrikesAdaptation))]
+            [RequireMultipleBombs()]
             InfiniteSequenceGlobalStrikes,
 
-            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time & Strikes", true, typeof(GlobalTimerAdaptation), typeof(GlobalStrikesAdaptation))]
+            [GameModeType(typeof(InfiniteSequenceMode), "∞ + Global Time & Strikes")]
+            [GameModeAdaptation(typeof(GlobalTimerAdaptation))]
+            [GameModeAdaptation(typeof(GlobalStrikesAdaptation))]
+            [RequireMultipleBombs()]
             InfiniteSequenceGlobalTimeStrikes,
         }
 
@@ -40,9 +53,20 @@ namespace FactoryAssembly
             return gameMode.GetAttributeOfType<GameModeTypeAttribute>().FriendlyName;
         }
 
+        public static Type[] GetGameModeAdapations(this GameMode gameMode)
+        {
+            GameModeAdaptationAttribute[] adaptations = gameMode.GetAttributesOfType<GameModeAdaptationAttribute>();
+            if (adaptations != null)
+            {
+                return adaptations.Select((x) => x.AdapatationType).ToArray();
+            }
+
+            return null;
+        }
+
         public static bool RequiresMultipleBombs(this GameMode gameMode)
         {
-            return gameMode.GetAttributeOfType<GameModeTypeAttribute>().RequireMultipleBombs;
+            return gameMode.GetAttributeOfType<RequireMultipleBombsAttribute>() != null;
         }
 
         public static string[] GetModeNames
