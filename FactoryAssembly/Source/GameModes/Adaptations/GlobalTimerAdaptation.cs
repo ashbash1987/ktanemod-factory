@@ -2,9 +2,9 @@
 
 namespace FactoryAssembly
 {
-    public class GlobalTimerAdaptation : FactoryGameModeAdaptation
+    internal class GlobalTimerAdaptation : FactoryGameModeAdaptation
     {
-        public override void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb)
+        internal override void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb)
         {
             if (previousBomb != null)
             {

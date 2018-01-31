@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace FactoryAssembly
 {
-    public static partial class FactoryGameModePicker
+    internal static partial class FactoryGameModePicker
     {
-        public enum GameMode
+        internal enum GameMode
         {
             [GameModeType(typeof(StaticMode), "Static")]
             Static,
@@ -48,12 +48,12 @@ namespace FactoryAssembly
             InfiniteSequenceGlobalTimeStrikes,
         }
 
-        public static string GetFriendlyName(this GameMode gameMode)
+        internal static string GetFriendlyName(this GameMode gameMode)
         {
             return gameMode.GetAttributeOfType<GameModeTypeAttribute>().FriendlyName;
         }
 
-        public static Type[] GetGameModeAdapations(this GameMode gameMode)
+        internal static Type[] GetGameModeAdapations(this GameMode gameMode)
         {
             GameModeAdaptationAttribute[] adaptations = gameMode.GetAttributesOfType<GameModeAdaptationAttribute>();
             if (adaptations != null)
@@ -64,12 +64,12 @@ namespace FactoryAssembly
             return null;
         }
 
-        public static bool RequiresMultipleBombs(this GameMode gameMode)
+        internal static bool RequiresMultipleBombs(this GameMode gameMode)
         {
             return gameMode.GetAttributeOfType<RequireMultipleBombsAttribute>() != null;
         }
 
-        public static string[] GetModeNames
+        internal static string[] GetModeNames
         {
             get
             {
@@ -83,7 +83,7 @@ namespace FactoryAssembly
             }
         }
 
-        public static bool[] GetModeSupport
+        internal static bool[] GetModeSupport
         {
             get
             {

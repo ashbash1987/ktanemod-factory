@@ -3,11 +3,11 @@
 namespace FactoryAssembly
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    public class GameModeAdaptationAttribute : Attribute
+    internal class GameModeAdaptationAttribute : Attribute
     {
-        public readonly Type AdapatationType;
+        internal readonly Type AdapatationType;
 
-        public GameModeAdaptationAttribute(Type attributeType)
+        internal GameModeAdaptationAttribute(Type attributeType)
         {
             AdapatationType = attributeType;
         }

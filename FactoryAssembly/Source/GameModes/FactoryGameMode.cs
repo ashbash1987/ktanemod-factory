@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace FactoryAssembly
 {
-    public abstract class FactoryGameMode : MonoBehaviour
+    internal abstract class FactoryGameMode
     {
-        public abstract float RemainingTime
+        internal abstract float RemainingTime
         {
             get;
         }
@@ -36,7 +35,7 @@ namespace FactoryAssembly
         private List<FactoryBomb> _bombs = new List<FactoryBomb>();
         private List<FactoryGameModeAdaptation> _adaptations = new List<FactoryGameModeAdaptation>();
 
-        public virtual void Setup(FactoryRoom room)
+        internal virtual void Setup(FactoryRoom room)
         {
             Room = room;
 
@@ -47,16 +46,20 @@ namespace FactoryAssembly
             }
         }
 
-        public void AddAdaptation(Type adpatationType)
+        internal void AddAdaptation(Type adpatationType)
         {
             _adaptations.Add(Activator.CreateInstance(adpatationType) as FactoryGameModeAdaptation);
+        }
+
+        internal virtual void Update()
+        {
         }
 
         /// <summary>
         /// Starts the 'current' bomb.
         /// </summary>
         /// <remarks>Invoked by animation event.</remarks>
-        public virtual void OnStartBomb()
+        internal virtual void OnStartBomb()
         {
         }
 
@@ -64,7 +67,7 @@ namespace FactoryAssembly
         /// Ends the 'old' bomb.
         /// </summary>
         /// <remarks>Invoked by animation event.</remarks>
-        public virtual void OnEndBomb()
+        internal virtual void OnEndBomb()
         {
         }
 

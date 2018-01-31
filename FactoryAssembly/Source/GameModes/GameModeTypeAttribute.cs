@@ -3,12 +3,12 @@
 namespace FactoryAssembly
 {
     [AttributeUsage(AttributeTargets.All)]
-    public class GameModeTypeAttribute : Attribute
+    internal class GameModeTypeAttribute : Attribute
     {
-        public readonly Type Type;
-        public readonly string FriendlyName;
+        internal readonly Type Type;
+        internal readonly string FriendlyName;
 
-        public GameModeTypeAttribute(Type type, string friendlyName)
+        internal GameModeTypeAttribute(Type type, string friendlyName)
         {
             Type = type;
             FriendlyName = friendlyName;

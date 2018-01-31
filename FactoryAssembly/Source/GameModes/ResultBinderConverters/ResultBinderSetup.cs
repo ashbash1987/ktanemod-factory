@@ -1,9 +1,9 @@
 ﻿namespace FactoryAssembly
 {
-    public static class ResultBinderSetup
+    internal static class ResultBinderSetup
     {
-        public static bool EnableOverride = false;
+        internal static bool EnableOverride = false;
 
-        public static string MissionName = null;
+        internal static string MissionName = null;
     }
 }

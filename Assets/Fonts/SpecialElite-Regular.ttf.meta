@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 65281c39c13f1b549bc513c29b32397a
+timeCreated: 1517350201
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Special Elite
+  fontNames:
+  - Special Elite
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

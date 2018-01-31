@@ -11,12 +11,12 @@ namespace FactoryAssembly
     /// Both Lupo511 and I agree that reflection is super-nasty for this, but it is really the only suitable way to do things for the time being, without having duplicated bomb creation code all over the shop.
     /// It also means now that Factory has a hard-line relationship to MultipleBombs for all gamemodes, rather than kinda required and kinda not.
     /// </remarks>
-    public static class MultipleBombsInterface
+    internal static class MultipleBombsInterface
     {
         private const string MULTIPLE_BOMBS_TYPE_NAME = "MultipleBombsAssembly.MultipleBombs";
         private const string CREATE_BOMB_METHOD_NAME = "createBomb";
 
-        public static bool CanAccess
+        internal static bool CanAccess
         {
             get
             {
@@ -31,7 +31,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Called from FactoryService.OnStateChange upon entering 'Setup' state. Re-ensures that we have access to MultipleBombs via reflection.
         /// </summary>
-        public static void RediscoverMultipleBombs()
+        internal static void RediscoverMultipleBombs()
         {
             Logging.Log("Rechecking for MultipleBombs...");
 
@@ -67,7 +67,7 @@ namespace FactoryAssembly
             Logging.Log("MultipleBombs gamemodes are enabled.");
         }
 
-        public static Bomb CreateBomb(string missionID, Transform targetTransform)
+        internal static Bomb CreateBomb(string missionID, Transform targetTransform)
         {
             if (!CanAccess)
             {

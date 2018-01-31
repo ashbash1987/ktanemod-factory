@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 222448050358281046}
   - component: {fileID: 114416559658898788}
   - component: {fileID: 114595703474800790}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: TopImageBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224470425889729460}
   - component: {fileID: 222256157697738806}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Mon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224978882592227874}
   - component: {fileID: 223619758802146822}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224617294533517424}
   - component: {fileID: 222610851125851350}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Wed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224188234104595260}
   - component: {fileID: 222621212019194950}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Tue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 4213260900067684}
   - component: {fileID: 20140735979983156}
   - component: {fileID: 92024803348438636}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: CalendarCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 224868674113560576}
   - component: {fileID: 222163126776532492}
   - component: {fileID: 114727807557994068}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 224858344740073462}
   - component: {fileID: 222773474622030160}
   - component: {fileID: 114598701168676678}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: TopImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 224805063289283682}
   - component: {fileID: 222131590485576778}
   - component: {fileID: 114523255531724674}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: CalendarCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224517335073206434}
   - component: {fileID: 222058762786936826}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Sat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -788,7 +788,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4460223268154716}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: OffscreenUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 33952033571994744}
   - component: {fileID: 23887127183727346}
   - component: {fileID: 114497475450707596}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: WorldQuad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -989,7 +989,7 @@ GameObject:
   - component: {fileID: 224367731713296268}
   - component: {fileID: 222985034893342574}
   - component: {fileID: 114184575254156784}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1042,7 +1042,7 @@ GameObject:
   - component: {fileID: 224488953493764604}
   - component: {fileID: 222638139851460490}
   - component: {fileID: 114334974691156228}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1251,7 +1251,7 @@ GameObject:
   - component: {fileID: 224954543416951070}
   - component: {fileID: 222216121846605732}
   - component: {fileID: 114370930790970494}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1331,7 +1331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4587028903163528}
   - component: {fileID: 114278650336720992}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Calendar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 224298022114656898}
   - component: {fileID: 222289582761699426}
   - component: {fileID: 114779639686390742}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1631,7 +1631,7 @@ GameObject:
   - component: {fileID: 224020217148085820}
   - component: {fileID: 222232900314975698}
   - component: {fileID: 114492169157530972}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Month
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1647,7 +1647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224983088840429112}
   - component: {fileID: 114252654543178682}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 224515639025678540}
   - component: {fileID: 222354023833812412}
   - component: {fileID: 114861900984365762}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,7 +1800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224013490388116920}
   - component: {fileID: 222865326648361580}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Fri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1836,7 +1836,7 @@ GameObject:
   - component: {fileID: 222687644073542358}
   - component: {fileID: 114371577354623358}
   - component: {fileID: 114487575928283668}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1956,7 +1956,7 @@ GameObject:
   - component: {fileID: 224835239942928680}
   - component: {fileID: 222414178604778874}
   - component: {fileID: 114920540668016110}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2028,7 +2028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224383979807250502}
   - component: {fileID: 222406856553414072}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Thu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2127,7 +2127,7 @@ GameObject:
   - component: {fileID: 224442770306003080}
   - component: {fileID: 222409683854667888}
   - component: {fileID: 114331055137591200}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2228,7 +2228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224883240582521010}
   - component: {fileID: 222114250780287280}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2260,7 +2260,7 @@ GameObject:
   - component: {fileID: 224750164229063548}
   - component: {fileID: 222382924099709042}
   - component: {fileID: 114500184234531870}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3003,7 +3003,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1323618709027492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224978882592227874}
@@ -3915,15 +3915,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 2
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: bc81e5f1063e23e4c9d74bccad51b5c8, type: 2}
   m_TargetDisplay: 0
@@ -6829,15 +6829,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1568681956487686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1392008724, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
+  m_Script: {fileID: -1392008724, guid: f28959e3182420b45b157996f417d88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentMonthAlpha: 1
   OtherMonthAlpha: 0.1
   WeekdayImageColor: {r: 1, g: 1, b: 1, a: 1}
-  WeekdayTextColor: {r: 0.121568635, g: 0.121568635, b: 0.121568635, a: 1}
-  WeekendImageColor: {r: 1, g: 0.77018255, b: 0.6764706, a: 1}
-  WeekendTextColor: {r: 0.25735295, g: 0.19648612, b: 0.15706098, a: 1}
+  WeekdayTextColor: {r: 0.12156863, g: 0.12156863, b: 0.12156863, a: 1}
+  WeekendImageColor: {r: 1, g: 0.76862746, b: 0.6745098, a: 1}
+  WeekendTextColor: {r: 0.25490198, g: 0.19607843, b: 0.15686275, a: 1}
   TopImage: {fileID: 114598701168676678}
   MonthText: {fileID: 114492169157530972}
   CalendarGrid: {fileID: 114252654543178682}
@@ -7489,19 +7489,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683890619030952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1608973328, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
+  m_Script: {fileID: 1175617776, guid: f28959e3182420b45b157996f417d88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _conveyorBeltAnimator: {fileID: 0}
-  _room: {fileID: 0}
-  _audio: {fileID: 0}
-  _currentBomb: {fileID: 0}
-  _oldBomb: {fileID: 0}
-  _conveyorBeltNodes: []
-  _nextBeltNodeIndex: 0
-  _leftDoor: {fileID: 0}
-  _rightDoor: {fileID: 0}
-  _conveyorTop: {fileID: 0}
+  ConveyorBeltNodes:
+  - {fileID: 4558214298417656}
+  - {fileID: 4085861342470310}
+  InitialSpawn: {fileID: 4651813768957766}
+  LeftDoor: {fileID: 4751591848806312}
+  RightDoor: {fileID: 4299350715459448}
+  ConveyorTop: {fileID: 4585881492382836}
+  DoorLongAudio: {fileID: 8300000, guid: 65377cb3189a0d04da5f112b802a92b6, type: 3}
+  DoorShortAudio: {fileID: 8300000, guid: 01eb06adf835f864a80f5a6c64546d71, type: 3}
+  ConveyorAudio: {fileID: 8300000, guid: 38d79345622f6c445bab794ed8d89819, type: 3}
+  VanillaBombSpawn: {fileID: 4596793928039200}
+  NormalLights:
+  - {fileID: 108741287505689470}
+  - {fileID: 108271616763707956}
+  WarningLight: {fileID: 114930194021620590}
+  AmbientOffColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
+  AmbientWarningColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  AmbientOnColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  LightOffIntensity: 0.02
+  LightWarningIntensity: 0.6
+  LightOnIntensity: 0.8
+  WarningTime: 60
 --- !u!114 &114727807557994068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7711,31 +7723,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683890619030952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1175617776, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
+  m_Script: {fileID: -1608973328, guid: f28959e3182420b45b157996f417d88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConveyorBeltNodes:
-  - {fileID: 4558214298417656}
-  - {fileID: 4085861342470310}
-  InitialSpawn: {fileID: 4651813768957766}
-  LeftDoor: {fileID: 4751591848806312}
-  RightDoor: {fileID: 4299350715459448}
-  ConveyorTop: {fileID: 4585881492382836}
-  DoorLongAudio: {fileID: 8300000, guid: 65377cb3189a0d04da5f112b802a92b6, type: 3}
-  DoorShortAudio: {fileID: 8300000, guid: 01eb06adf835f864a80f5a6c64546d71, type: 3}
-  ConveyorAudio: {fileID: 8300000, guid: 38d79345622f6c445bab794ed8d89819, type: 3}
-  VanillaBombSpawn: {fileID: 4596793928039200}
-  NormalLights:
-  - {fileID: 108741287505689470}
-  - {fileID: 108271616763707956}
-  WarningLight: {fileID: 114930194021620590}
-  AmbientOffColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
-  AmbientWarningColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  AmbientOnColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-  LightOffIntensity: 0.02
-  LightWarningIntensity: 0.6
-  LightOnIntensity: 0.8
-  WarningTime: 60
 --- !u!114 &114898541513451406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7803,7 +7793,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1280481858158224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1927059336, guid: 38f95b80b0096184792dfca5554108ad, type: 3}
+  m_Script: {fileID: 1927059336, guid: f28959e3182420b45b157996f417d88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSpeed: 160
@@ -8009,7 +7999,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 20140735979983156}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

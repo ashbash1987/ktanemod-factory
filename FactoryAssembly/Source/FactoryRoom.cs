@@ -8,13 +8,13 @@ namespace FactoryAssembly
 {
     public class FactoryRoom : MonoBehaviour
     {
-        public Selectable RoomSelectable
+        internal Selectable RoomSelectable
         {
             get;
             private set;
         }
 
-        public Transform InitialSpawn
+        internal Transform InitialSpawn
         {
             get
             {
@@ -22,12 +22,18 @@ namespace FactoryAssembly
             }
         }
 
-        public Transform VanillaBombSpawn
+        internal Transform VanillaBombSpawn
         {
             get
             {
                 return _data.VanillaBombSpawn;
             }
+        }
+
+        internal FactoryGameMode GameMode
+        {
+            get;
+            private set;
         }
 
         private FactoryRoomData _data = null;
@@ -41,8 +47,6 @@ namespace FactoryAssembly
 
         private bool _initialSwitchOn = true;
         private bool _lightsOn = false;
-
-        private FactoryGameMode _gameMode = null;
 
         #region Unity Lifecycle
         /// <summary>
@@ -68,8 +72,8 @@ namespace FactoryAssembly
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
             RoomSelectable = gameplayState.Room.GetComponent<Selectable>();
 
-            _gameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject);
-            QuickDelay(() => _gameMode.Setup(this));
+            GameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject);
+            QuickDelay(() => GameMode.Setup(this));
 
             OnLightChange(false);
         }
@@ -79,12 +83,17 @@ namespace FactoryAssembly
         /// </summary>
         private void Update()
         {
+            if (GameMode != null)
+            {
+                GameMode.Update();
+            }
+
             UpdateLighting();
         }
         #endregion
 
-        #region Public Methods
-        public Transform GetNextConveyorNode()
+        #region Public (Internal) Methods
+        internal Transform GetNextConveyorNode()
         {
             Transform nextNode = _data.ConveyorBeltNodes[_nextBeltNodeIndex];
             _nextBeltNodeIndex = (_nextBeltNodeIndex + 1) % _data.ConveyorBeltNodes.Length;
@@ -92,18 +101,18 @@ namespace FactoryAssembly
             return nextNode;
         }
 
-        public void GetNextBomb()
+        internal void GetNextBomb()
         {
             _conveyorBeltAnimator.SetTrigger("NextBomb");
             _audio.PlaySoundAtTransform(_data.ConveyorAudio.name, _data.ConveyorTop);
         }
 
-        public Bomb CreateBombWithCurrentMission()
+        internal Bomb CreateBombWithCurrentMission()
         {
             return CreateBomb(GameplayState.MissionToLoad);
         }
 
-        public Bomb CreateBomb(string missionID)
+        internal Bomb CreateBomb(string missionID)
         {
             //Protection in case MultipleBombs cannot be accessed
             if (!MultipleBombsInterface.CanAccess)
@@ -130,7 +139,7 @@ namespace FactoryAssembly
             return bomb;
         }
 
-        public void DestroyBomb(Bomb bomb)
+        internal void DestroyBomb(Bomb bomb)
         {
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
             List<Bomb> bombs = gameplayState.Bombs;
@@ -165,7 +174,7 @@ namespace FactoryAssembly
         #region Lighting Methods
         private void UpdateLighting()
         {
-            bool warningTime = _gameMode != null ? (_gameMode.RemainingTime < _data.WarningTime) : false;
+            bool warningTime = GameMode != null ? (GameMode.RemainingTime < _data.WarningTime) : false;
 
             float lightIntensity = _lightsOn ? (warningTime ? _data.LightWarningIntensity : _data.LightOnIntensity) : _data.LightOffIntensity;
             Color ambientColor = _lightsOn ? (warningTime ? _data.AmbientWarningColor : _data.AmbientOnColor) : _data.AmbientOffColor;
@@ -237,7 +246,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void StartBomb()
         {
-            _gameMode.OnStartBomb();
+            GameMode.OnStartBomb();
         }
 
         /// <summary>
@@ -246,7 +255,7 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         private void EndBomb()
         {
-            _gameMode.OnEndBomb();
+            GameMode.OnEndBomb();
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 namespace FactoryAssembly
 {
-    public class InfiniteSequenceMode : FiniteSequenceMode
+    internal class InfiniteSequenceMode : FiniteSequenceMode
     {
         /// <summary>
         /// Requests the next bomb to show up.
@@ -19,7 +19,7 @@ namespace FactoryAssembly
 
             base.GetNextBomb();
 
-            StartCoroutine(DelayDestroyBomb(_oldBomb));
+            Room.StartCoroutine(DelayDestroyBomb(_oldBomb));
         }
 
         private IEnumerator DelayDestroyBomb(FactoryBomb bomb)

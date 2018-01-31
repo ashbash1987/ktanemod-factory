@@ -20,7 +20,7 @@ namespace FactoryAssembly
             _properties.Add("SupportedModes", () => FactoryGameModePicker.GetModeNames, null);
             _properties.Add("EnabledModes", () => FactoryGameModePicker.GetModeSupport, null);
 
-            _binderConverter = GetComponent<ResultBinderConverter>();
+            _binderConverter = GetComponentInChildren<ResultBinderConverter>(true);
         }
 
         private void OnDestroy()

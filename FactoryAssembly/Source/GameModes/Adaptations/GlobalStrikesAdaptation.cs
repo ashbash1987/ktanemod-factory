@@ -1,8 +1,8 @@
 ﻿namespace FactoryAssembly
 {
-    public class GlobalStrikesAdaptation : FactoryGameModeAdaptation
+    internal class GlobalStrikesAdaptation : FactoryGameModeAdaptation
     {
-        public override void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb)
+        internal override void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb)
         {
             if (previousBomb != null)
             {

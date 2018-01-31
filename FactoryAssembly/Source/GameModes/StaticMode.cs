@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace FactoryAssembly
 {
-    public class StaticMode : FactoryGameMode
+    internal class StaticMode : FactoryGameMode
     {
-        public override float RemainingTime
+        internal override float RemainingTime
         {
             get
             {
@@ -16,7 +16,7 @@ namespace FactoryAssembly
         private const float SPAWN_LENGTH = 3.0f;
         private const float MAXIMUM_BOMB_SPACING = 0.6f;
 
-        public override void Setup(FactoryRoom room)
+        internal override void Setup(FactoryRoom room)
         {
             base.Setup(room);
 

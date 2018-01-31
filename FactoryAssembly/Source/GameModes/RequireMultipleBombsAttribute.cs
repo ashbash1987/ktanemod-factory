@@ -3,7 +3,7 @@
 namespace FactoryAssembly
 {
     [AttributeUsage(AttributeTargets.All)]
-    public class RequireMultipleBombsAttribute : Attribute
+    internal class RequireMultipleBombsAttribute : Attribute
     {
     }
 }

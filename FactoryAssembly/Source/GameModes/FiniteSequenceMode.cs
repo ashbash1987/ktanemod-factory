@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace FactoryAssembly
 {
-    public class FiniteSequenceMode : FactoryGameMode
+    internal class FiniteSequenceMode : FactoryGameMode
     {
-        public override float RemainingTime
+        internal override float RemainingTime
         {
             get
             {
@@ -31,10 +31,7 @@ namespace FactoryAssembly
         private Selectable[] _roomChildren = null;
         private int _bombSelectableIndex = 0;
 
-        /// <summary>
-        /// Unity event.
-        /// </summary>
-        private void Update()
+        internal override void Update()
         {
             if (_currentBomb != null && _currentBomb.IsReadyToShip)
             {
@@ -44,7 +41,7 @@ namespace FactoryAssembly
             }
         }
 
-        public override void Setup(FactoryRoom room)
+        internal override void Setup(FactoryRoom room)
         {
             base.Setup(room);
 
@@ -58,15 +55,15 @@ namespace FactoryAssembly
 
             _roomSelectable = Room.RoomSelectable;
 
-            StartCoroutine(StartGameplay());
-            StartCoroutine(AdjustSelectableGrid());
+            Room.StartCoroutine(StartGameplay());
+            Room.StartCoroutine(AdjustSelectableGrid());
         }
 
         /// <summary>
         /// Starts the 'current' bomb.
         /// </summary>
         /// <remarks>Invoked by animation event.</remarks>
-        public override void OnStartBomb()
+        internal override void OnStartBomb()
         {
             if (_currentBomb != null)
             {
@@ -79,7 +76,7 @@ namespace FactoryAssembly
         /// Ends the 'old' bomb.
         /// </summary>
         /// <remarks>Invoked by animation event.</remarks>
-        public override void OnEndBomb()
+        internal override void OnEndBomb()
         {
             if (_oldBomb != null)
             {

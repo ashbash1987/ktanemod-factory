@@ -33,7 +33,14 @@ namespace FactoryAssembly
         {
             if (_gameMode == null)
             {
-                _gameMode = FindObjectOfType<FactoryGameMode>();
+                FactoryRoom factoryRoom = FindObjectOfType<FactoryRoom>();
+                if (factoryRoom == null)
+                {
+                    DestroyImmediate(gameObject);
+                    return;
+                }
+
+                _gameMode = factoryRoom.GameMode;
                 return;
             }
 

@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace FactoryAssembly
 {
-    public static partial class FactoryGameModePicker
+    internal static partial class FactoryGameModePicker
     {
         private const string FACTORY_MODE_POOL_ID = "Factory Mode";
         private const string MULTIPLE_BOMBS_POOL_ID = "Multiple Bombs";
         private static Dictionary<string, GameMode> _discoveredMissions = new Dictionary<string, GameMode>();
 
-        public static void UpdateCompatibleMissions()
+        internal static void UpdateCompatibleMissions()
         {
             foreach (ModMission mission in ModManager.Instance.ModMissions)
             {
@@ -19,7 +19,7 @@ namespace FactoryAssembly
             }
         }
 
-        public static void UpdateMission(Mission mission, bool force = false, bool tidyOtherComponents = false, bool mustReturnValue = false)
+        internal static void UpdateMission(Mission mission, bool force = false, bool tidyOtherComponents = false, bool mustReturnValue = false)
         {
             //Get the previously discovered gamemode to see what the mission was defined as
             GameMode? previousDiscoveredGameMode = GetGameModeForMission(mission);
@@ -62,11 +62,11 @@ namespace FactoryAssembly
             }
         }
 
-        public static FactoryGameMode CreateGameMode(string missionID, GameObject gameObject)
+        internal static FactoryGameMode CreateGameMode(string missionID, GameObject gameObject)
         {
             if (missionID.Equals(FreeplayMissionGenerator.FREEPLAY_MISSION_ID))
             {
-                return gameObject.AddComponent<FiniteSequenceMode>();
+                return new FiniteSequenceMode();
             }
             else
             {
@@ -105,7 +105,7 @@ namespace FactoryAssembly
             if (attribute != null)
             {
                 Logging.Log("Creating gamemode '{0}'.", attribute.FriendlyName);
-                FactoryGameMode factoryGameMode = gameObject.AddComponent(attribute.Type) as FactoryGameMode;
+                FactoryGameMode factoryGameMode = Activator.CreateInstance(attribute.Type) as FactoryGameMode;
 
                 Type[] adapations = gameMode.GetGameModeAdapations();
                 if (adapations != null)
@@ -121,7 +121,7 @@ namespace FactoryAssembly
             else
             {
                 Logging.Log("Creating gamemode '{0}'.", GameMode.Static.GetFriendlyName());
-                return gameObject.AddComponent<StaticMode>();
+                return new StaticMode();
             }
         }
     

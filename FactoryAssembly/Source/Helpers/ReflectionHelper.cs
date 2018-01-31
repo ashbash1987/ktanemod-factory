@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace FactoryAssembly
 {
-    public static class ReflectionHelper
+    internal static class ReflectionHelper
     {
-        public static Type FindType(string fullName)
+        internal static Type FindType(string fullName)
         {
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetSafeTypes()).FirstOrDefault(t => t.FullName.Equals(fullName));
         }

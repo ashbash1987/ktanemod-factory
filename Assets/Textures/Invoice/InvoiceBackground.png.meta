@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 83d74866ca3418a499862acf6a3cf570
-timeCreated: 1517166161
+guid: 51ebc83b7c95f494a9548108bd1ed651
+timeCreated: 1517342488
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -34,7 +34,7 @@ TextureImporter:
     aniso: -1
     mipBias: -1
     wrapU: 1
-    wrapV: -1
+    wrapV: 1
     wrapW: -1
   nPOTScale: 0
   lightmap: 0
@@ -78,5 +78,5 @@ TextureImporter:
     physicsShape: []
   spritePackingTag: 
   userData: 
-  assetBundleName: mod.bundle
+  assetBundleName: 
   assetBundleVariant: 

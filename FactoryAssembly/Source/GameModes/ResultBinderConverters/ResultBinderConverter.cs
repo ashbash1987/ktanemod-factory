@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace FactoryAssembly
     {
         public Texture TargetTexture = null;
 
-        public bool Converted
+        internal bool Converted
         {
             get;
             private set;

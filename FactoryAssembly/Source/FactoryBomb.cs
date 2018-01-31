@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace FactoryAssembly
 {
-    public class FactoryBomb : MonoBehaviour
+    internal class FactoryBomb : MonoBehaviour
     {
-        public bool IsReadyToShip
+        internal bool IsReadyToShip
         {
             get
             {
@@ -13,25 +13,25 @@ namespace FactoryAssembly
             }
         }
 
-        public Selectable Selectable
+        internal Selectable Selectable
         {
             get;
             private set;
         }
 
-        public Bomb InternalBomb
+        internal Bomb InternalBomb
         {
             get;
             private set;
         }
 
-        public TimerComponent Timer
+        internal TimerComponent Timer
         {
             get;
             private set;
         }
 
-        public bool Ended
+        internal bool Ended
         {
             get;
             private set;
@@ -65,11 +65,11 @@ namespace FactoryAssembly
         }
         #endregion
 
-        #region Public Methods
+        #region Public (Internal) Methods
         /// <summary>
         /// Sets up/overrides the holdable's origin position when the bomb is placed down.
         /// </summary>
-        public void SetupHoldableOrigin(Vector3 position)
+        internal void SetupHoldableOrigin(Vector3 position)
         {
             _holdable.OrigPosition = position;
         }
@@ -77,7 +77,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Sets up/overrides the holdable's origin orientation when the bomb is placed down.
         /// </summary>
-        public void SetupHoldableOrientation(Quaternion rotation)
+        internal void SetupHoldableOrientation(Quaternion rotation)
         {
             _holdable.OrigRotation = rotation;
         }
@@ -85,7 +85,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Sets up the initial starting position of the bomb when it will initally enter the room.
         /// </summary>
-        public void SetupStartPosition(Transform conveyorBeltNode)
+        internal void SetupStartPosition(Transform conveyorBeltNode)
         {
             _targetStartPosition = conveyorBeltNode.transform.position;
             _targetStartPosition.y = transform.position.y;
@@ -103,7 +103,7 @@ namespace FactoryAssembly
         /// <remarks>
         /// Ensure that the bomb has had SetupStartPosition() called beforehand to setup the initial position.
         /// </remarks>
-        public void AttachToConveyor(Transform conveyorBeltNode)
+        internal void AttachToConveyor(Transform conveyorBeltNode)
         {
             transform.position = _targetStartPosition;
             transform.rotation = _holdable.OrigRotation;
@@ -116,7 +116,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Manually starts the bomb, if the bomb's normal behavior is overridden.
         /// </summary>
-        public void StartBomb()
+        internal void StartBomb()
         {
             StartCoroutine(StartBombCoroutine());
         }
@@ -124,7 +124,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Manually enables the bomb.
         /// </summary>
-        public void EnableBomb()
+        internal void EnableBomb()
         {
             SetSelectableLayer(true);
         }
@@ -132,7 +132,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Manually disables the bomb.
         /// </summary>
-        public void DisableBomb()
+        internal void DisableBomb()
         {
             SetSelectableLayer(false);
         }
@@ -140,7 +140,7 @@ namespace FactoryAssembly
         /// <summary>
         /// Manually 'ends' the bomb, although that is a loose term.
         /// </summary>
-        public void EndBomb()
+        internal void EndBomb()
         {
             //Can't destroy the bomb, as it causes problems when trying to leave the gameplay room after defusal, as it needs the bomb for the time remaining value!
             //So instead of DestroyObject(..), move it to somewhere offscreen a long way away, and *hope* for the best!

@@ -1,7 +1,7 @@
 ﻿namespace FactoryAssembly
 {
-    public abstract class FactoryGameModeAdaptation
+    internal abstract class FactoryGameModeAdaptation
     {
-        public abstract void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb);
+        internal abstract void OnStartBomb(FactoryBomb previousBomb, FactoryBomb thisBomb);
     }
 }
