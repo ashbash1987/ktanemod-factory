@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.Missions;
+using Assets.Scripts.Records;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -72,7 +74,15 @@ namespace FactoryAssembly
             GameplayState gameplayState = SceneManager.Instance.GameplayState;
             RoomSelectable = gameplayState.Room.GetComponent<Selectable>();
 
-            GameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject);
+            InvoiceData.ClearData();
+
+            Mission mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
+            InvoiceData.MissionName = mission?.DisplayName;
+
+            FactoryGameModePicker.GameMode gameModeEnum;
+            GameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject, out gameModeEnum);
+            InvoiceData.GameMode = gameModeEnum;
+
             QuickDelay(() => GameMode.Setup(this));
 
             OnLightChange(false);
@@ -83,10 +93,7 @@ namespace FactoryAssembly
         /// </summary>
         private void Update()
         {
-            if (GameMode != null)
-            {
-                GameMode.Update();
-            }
+            GameMode?.Update();
 
             UpdateLighting();
         }

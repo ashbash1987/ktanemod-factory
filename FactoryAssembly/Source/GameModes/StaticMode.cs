@@ -20,7 +20,7 @@ namespace FactoryAssembly
         {
             base.Setup(room);
 
-            ResultBinderSetup.EnableOverride = false;
+            InvoiceData.Enabled = false;
 
             FactoryBomb[] bombs = Bombs.ToArray();
 

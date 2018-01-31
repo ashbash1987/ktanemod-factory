@@ -50,7 +50,6 @@ namespace FactoryAssembly
                         FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true, false, true);
 
                         StartCoroutine(FixCustomMission());
-
                     }
                     _fromSetupRoom = false;
 
@@ -60,7 +59,7 @@ namespace FactoryAssembly
                 case KMGameInfo.State.PostGame:
                     Logging.Log("Stage Change: PostGame");
 
-                    if (ResultBinderSetup.EnableOverride)
+                    if (InvoiceData.Enabled)
                     {
                         _binderConverter.Convert();
                     }

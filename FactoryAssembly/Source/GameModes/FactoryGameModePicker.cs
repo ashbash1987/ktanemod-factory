@@ -62,22 +62,25 @@ namespace FactoryAssembly
             }
         }
 
-        internal static FactoryGameMode CreateGameMode(string missionID, GameObject gameObject)
+        internal static FactoryGameMode CreateGameMode(string missionID, GameObject gameObject, out FactoryGameModePicker.GameMode gameMode)
         {
             if (missionID.Equals(FreeplayMissionGenerator.FREEPLAY_MISSION_ID))
             {
+                gameMode = GameMode.FiniteSequence;
                 return new FiniteSequenceMode();
             }
             else
             {
-                GameMode? gameMode = GetGameModeForMission(missionID);
-                if (gameMode.HasValue)
+                GameMode? discoveredGameMode = GetGameModeForMission(missionID);
+                if (discoveredGameMode.HasValue)
                 {
-                    return CreateGameMode(gameMode.Value, gameObject);
+                    gameMode = discoveredGameMode.Value;
+                    return CreateGameMode(gameMode, gameObject);
                 }
                 else
                 {
-                    return CreateGameMode(GameMode.Static, gameObject);
+                    gameMode = GameMode.Static;
+                    return CreateGameMode(gameMode, gameObject);
                 }
             }
         }

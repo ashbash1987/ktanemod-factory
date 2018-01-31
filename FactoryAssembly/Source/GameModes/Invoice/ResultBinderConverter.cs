@@ -6,7 +6,10 @@ namespace FactoryAssembly
 {
     public class ResultBinderConverter : MonoBehaviour
     {
+        private const string FRONT_SHEET_NAME = "Paper_letter/SheetFront";
         public Texture TargetTexture = null;
+
+        public GameObject Invoice = null;
 
         internal bool Converted
         {
@@ -31,11 +34,13 @@ namespace FactoryAssembly
             StartCoroutine(ConvertCoroutine());
 
             Converted = true;
+            Invoice.SetActive(true);
         }
 
         public void Revert()
         {
             Converted = false;
+            Invoice.SetActive(false);
         }
 
         private IEnumerator ConvertCoroutine()
@@ -53,7 +58,7 @@ namespace FactoryAssembly
 
         private void ConvertResultsPage(ResultPage resultPage)
         {
-            Transform sheetFront = resultPage.transform.Find("Paper_letter/SheetFront");
+            Transform sheetFront = resultPage.transform.Find(FRONT_SHEET_NAME);
             if (sheetFront != null)
             {
                 MeshRenderer sheetFrontRenderer = sheetFront.GetComponent<MeshRenderer>();

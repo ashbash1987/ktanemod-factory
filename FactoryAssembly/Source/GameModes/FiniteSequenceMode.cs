@@ -45,7 +45,7 @@ namespace FactoryAssembly
         {
             base.Setup(room);
 
-            ResultBinderSetup.EnableOverride = true;
+            InvoiceData.Enabled = true;
 
             foreach (FactoryBomb bomb in Bombs)
             {
@@ -78,11 +78,8 @@ namespace FactoryAssembly
         /// <remarks>Invoked by animation event.</remarks>
         internal override void OnEndBomb()
         {
-            if (_oldBomb != null)
-            {
-                _oldBomb.EndBomb();
-                _oldBomb = null;
-            }
+            _oldBomb?.EndBomb();
+            _oldBomb = null;
         }
 
         /// <summary>
@@ -109,6 +106,8 @@ namespace FactoryAssembly
                 {
                     adaptation.OnStartBomb(_oldBomb, _currentBomb);
                 }
+
+                _currentBomb.BombConfigured();
             }
 
             Room.GetNextBomb();
@@ -125,10 +124,7 @@ namespace FactoryAssembly
             yield return new WaitForSeconds(2.0f);
 
             gameplayState.Room.ActivateCeilingLights();
-            if (GameplayState.OnLightsOnEvent != null)
-            {
-                GameplayState.OnLightsOnEvent();
-            }
+            GameplayState.OnLightsOnEvent?.Invoke();
 
             if ((KTInputManager.Instance.GetCurrentSelectable() == null || KTInputManager.Instance.GetCurrentSelectable().Parent == KTInputManager.Instance.RootSelectable) && !KTInputManager.Instance.IsMotionControlMode())
             {
@@ -178,7 +174,7 @@ namespace FactoryAssembly
         {
             KTInputManager.Instance.ClearSelection();
 
-            Selectable selectable = bomb != null ? bomb.Selectable : null;
+            Selectable selectable = bomb?.Selectable;
 
             _roomChildren[_bombSelectableIndex] = selectable;
 

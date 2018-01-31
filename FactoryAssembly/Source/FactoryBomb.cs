@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Events;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace FactoryAssembly
@@ -45,6 +47,7 @@ namespace FactoryAssembly
         private FloatingHoldable _holdable = null;
         private SelectableArea _selectableArea = null;
         private Vector3 _targetStartPosition = Vector3.zero;
+        private bool _timerStarted = false;
 
         #region Unity Lifecycle
         /// <summary>
@@ -61,7 +64,27 @@ namespace FactoryAssembly
             Selectable = GetComponent<Selectable>();
 
             ChangeTimerVisibility(false);
-            SetSelectableLayer(false);            
+            SetSelectableLayer(false);
+
+            OnBombConfigured();
+
+            BombEvents.OnBombSolved += OnAnyBombSolved;
+            BombEvents.OnBombDetonated += OnAnyBombDetonated;
+        }
+
+        private void Update()
+        {
+            if (!_timerStarted && Timer.IsUpdating)
+            {
+                OnBombTimerStart();
+                _timerStarted = true;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            BombEvents.OnBombSolved -= OnAnyBombSolved;
+            BombEvents.OnBombDetonated -= OnAnyBombDetonated;
         }
         #endregion
 
@@ -90,7 +113,7 @@ namespace FactoryAssembly
             _targetStartPosition = conveyorBeltNode.transform.position;
             _targetStartPosition.y = transform.position.y;
 
-            SetupHoldableOrientation(Quaternion.Euler(0.0f, Random.Range(-90.0f, 90.0f), 0.0f));
+            SetupHoldableOrientation(Quaternion.Euler(0.0f, UnityEngine.Random.Range(-90.0f, 90.0f), 0.0f));
 
             //Can't deactivate the bomb temporarily, as it causes coroutines to stop which are necessary for various initialization sequences of modules, widgets, etc!
             //So instead of SetActive(false), move it to somewhere offscreen a long way away, and *hope* for the best!
@@ -111,6 +134,11 @@ namespace FactoryAssembly
             transform.SetParent(conveyorBeltNode, true);
 
             ChangeTimerVisibility(false);
+        }
+
+        internal void BombConfigured()
+        {
+            OnBombConfigured();
         }
 
         /// <summary>
@@ -192,6 +220,65 @@ namespace FactoryAssembly
         private void SetSelectableLayer(bool enable)
         {
             _selectableArea.gameObject.layer = enable ? NORMAL_SELECTABLE_COLLIDER_LAYER_INDEX : DISABLED_SELECTABLE_COLLIDER_LAYER_INDEX;
+        }
+
+        private void OnBombConfigured()
+        {
+            BombData bombData = InvoiceData.GetBombDataForBomb(GetInstanceID());
+            if (bombData == null)
+            {
+                return;
+            }
+
+            bombData.RealWorldStartTime = DateTime.Now;
+            bombData.StartRemainingTime = Timer.TimeRemaining;
+            bombData.StartStrikesCount = InternalBomb.NumStrikes;
+            bombData.StrikesToLose = InternalBomb.NumStrikesToLose;
+            bombData.SolvableModuleCount = InternalBomb.GetSolvableComponentCount();
+            bombData.Started = true;
+        }
+
+        private void OnBombTimerStart()
+        {
+            BombData bombData = InvoiceData.GetBombDataForBomb(GetInstanceID());
+            if (bombData == null)
+            {
+                return;
+            }
+
+            bombData.RealWorldStartTime = DateTime.Now;
+        }
+
+        private void OnAnyBombSolved()
+        {
+            BombData bombData = InvoiceData.GetBombDataForBomb(GetInstanceID());
+            if (bombData == null || bombData.Complete || !InternalBomb.IsSolved())
+            {
+                return;
+            }
+
+            bombData.RealWorldEndTime = DateTime.Now;
+            bombData.EndRemainingTime = Timer.TimeRemaining;
+            bombData.EndStrikesCount = InternalBomb.NumStrikes;
+            bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
+
+            bombData.Complete = true;
+        }
+
+        private void OnAnyBombDetonated()
+        {
+            BombData bombData = InvoiceData.GetBombDataForBomb(GetInstanceID());
+            if (bombData == null || bombData.Complete)
+            {
+                return;
+            }
+
+            bombData.RealWorldEndTime = DateTime.Now;
+            bombData.EndRemainingTime = Timer.TimeRemaining;
+            bombData.EndStrikesCount = InternalBomb.NumStrikes;
+            bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
+
+            bombData.Complete = true;
         }
         #endregion
     }
