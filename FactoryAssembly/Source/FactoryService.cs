@@ -23,6 +23,18 @@ namespace FactoryAssembly
             _binderConverter = GetComponentInChildren<ResultBinderConverter>(true);
         }
 
+        private void OnEnable()
+        {
+            InvoiceData.Enabled = false;
+            InvoiceData.ClearData();
+        }
+
+        private void OnDisable()
+        {
+            InvoiceData.Enabled = false;
+            InvoiceData.ClearData();
+        }
+
         private void OnDestroy()
         {
             _gameInfo.OnStateChange -= OnStateChange;
@@ -34,6 +46,9 @@ namespace FactoryAssembly
             {
                 case KMGameInfo.State.Setup:
                     Logging.Log("State Change: Setup");
+
+                    InvoiceData.Enabled = false;
+                    InvoiceData.ClearData();
 
                     MultipleBombsInterface.RediscoverMultipleBombs();
                     FactoryGameModePicker.UpdateCompatibleMissions();

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Missions;
-using Assets.Scripts.Records;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,6 +77,11 @@ namespace FactoryAssembly
 
             Mission mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
             InvoiceData.MissionName = mission?.DisplayName;
+
+            if (string.IsNullOrEmpty(InvoiceData.MissionName))
+            {
+                InvoiceData.MissionName = "Free Play";
+            }
 
             FactoryGameModePicker.GameMode gameModeEnum;
             GameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject, out gameModeEnum);

@@ -66,8 +66,6 @@ namespace FactoryAssembly
             ChangeTimerVisibility(false);
             SetSelectableLayer(false);
 
-            OnBombConfigured();
-
             BombEvents.OnBombSolved += OnAnyBombSolved;
             BombEvents.OnBombDetonated += OnAnyBombDetonated;
         }
@@ -184,11 +182,9 @@ namespace FactoryAssembly
             ChangeTimerVisibility(true);
             SetSelectableLayer(true);
 
-            yield return new WaitForSeconds(1.0f);
-
             ActivateBomb();
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(3.0f);
 
             StartTimer();
         }

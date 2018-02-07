@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 namespace FactoryAssembly
 {
@@ -9,17 +10,23 @@ namespace FactoryAssembly
         /// </summary>
         protected override void GetNextBomb()
         {
-            //Need to pre-emptively add a bomb before the "last" bomb each time
             if (_bombQueue.Count == 1)
             {
-                FactoryBomb nextBomb = AddAnotherBomb();
-                nextBomb.SetupStartPosition(Room.InitialSpawn);
-                _bombQueue.Enqueue(nextBomb);
+                Room.StartCoroutine(DelayCreateBomb());
             }
 
             base.GetNextBomb();
 
             Room.StartCoroutine(DelayDestroyBomb(_oldBomb));
+        }
+
+        private IEnumerator DelayCreateBomb()
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            FactoryBomb nextBomb = AddAnotherBomb();
+            nextBomb.SetupStartPosition(Room.InitialSpawn);
+            _bombQueue.Enqueue(nextBomb);
         }
 
         private IEnumerator DelayDestroyBomb(FactoryBomb bomb)

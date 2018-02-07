@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +16,7 @@ namespace FactoryAssembly
 
         public void OnEnable()
         {
-            InvoiceNumber.text = $"Invoice #29875-AB";
+            InvoiceNumber.text = $"Invoice {InvoiceData.InvoiceNumber}";
 
             StringBuilder missionBuilder = new StringBuilder();
 
@@ -23,11 +26,16 @@ namespace FactoryAssembly
             missionBuilder.Append(GetMissionProperty(InvoiceData.InitialTime.GetBombTime()));
             missionBuilder.Append(GetMissionProperty($"{InvoiceData.InitialStrikesToLose} {SingularPlural(InvoiceData.InitialStrikesToLose, "strike", "strikes")}"));
 
+            string bombTimes = string.Join(", ", InvoiceData.StartedBombs.Select((x) => TimeSpan.FromSeconds(x.EndRemainingTime).GetBombTime()).ToArray());
+            missionBuilder.Append($"<size=24>Individual times: {bombTimes}\n</size>");
+
             MissionItem.text = missionBuilder.ToString();
 
             Quantity.text = $"x{InvoiceData.BombCount}";
 
             Totals.text = $"{InvoiceData.FinalTime.GetBombTime()}\n{InvoiceData.TotalBombRemainingTime.GetBombTime()}\n{InvoiceData.TotalStrikes}";
+
+            StartCoroutine(ShowStamp());
         }
 
         private string GetMissionProperty(string property)
@@ -43,6 +51,13 @@ namespace FactoryAssembly
             }
 
             return plural;
+        }
+
+        private IEnumerator ShowStamp()
+        {
+            yield return new WaitForSeconds(2.0f);
+
+            GetComponentInParent<ResultBinderConverter>().ShowStamp();
         }
     }
 }

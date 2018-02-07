@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FactoryAssembly
 {
@@ -136,7 +137,13 @@ namespace FactoryAssembly
             }
         }
 
-        private static IEnumerable<BombData> StartedBombs
+        internal static string InvoiceNumber
+        {
+            get;
+            set;
+        }
+
+        internal static IEnumerable<BombData> StartedBombs
         {
             get
             {
@@ -146,6 +153,23 @@ namespace FactoryAssembly
 
         private static List<BombData> _bombProgress = new List<BombData>();
         private static Dictionary<int, BombData> _bombProgressLookup = new Dictionary<int, BombData>();
+
+        internal static void Start()
+        {
+            Enabled = true;
+
+            StringBuilder invoiceNumber = new StringBuilder();
+            invoiceNumber.Append(UnityEngine.Random.Range(0, 10));
+            invoiceNumber.Append(UnityEngine.Random.Range(0, 10));
+            invoiceNumber.Append(UnityEngine.Random.Range(0, 10));
+            invoiceNumber.Append(UnityEngine.Random.Range(0, 10));
+            invoiceNumber.Append(UnityEngine.Random.Range(0, 10));
+            invoiceNumber.Append("-");
+            invoiceNumber.Append((char)UnityEngine.Random.Range('A', 'Z'));
+            invoiceNumber.Append((char)UnityEngine.Random.Range('A', 'Z'));
+
+            InvoiceNumber = invoiceNumber.ToString();
+        }
 
         internal static void ClearData()
         {

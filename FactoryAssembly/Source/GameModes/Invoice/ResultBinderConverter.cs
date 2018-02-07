@@ -18,13 +18,19 @@ namespace FactoryAssembly
         }
 
         private static readonly FieldInfo _displayRoutineField = null;
+        private KMAudio _audio = null;
 
         static ResultBinderConverter()
         {
             _displayRoutineField = typeof(ResultPage).GetField("displayRoutine", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public void Convert()
+        private void Awake()
+        {
+            _audio = GetComponent<KMAudio>();
+        }
+
+        internal void Convert()
         {
             if (Converted)
             {
@@ -37,10 +43,20 @@ namespace FactoryAssembly
             Invoice.SetActive(true);
         }
 
-        public void Revert()
+        internal void Revert()
         {
             Converted = false;
             Invoice.SetActive(false);
+        }
+
+        internal void ShowStamp()
+        {
+            BombBinder bombBinder = SceneManager.Instance.PostGameState.Room.BombBinder;
+            ShowStamp(bombBinder.ResultDefusedPage);
+            ShowStamp(bombBinder.ResultExplodedPage);
+            ShowStamp(bombBinder.ResultFreeplayDefusedPage);
+            ShowStamp(bombBinder.ResultFreeplayExplodedPage);
+            ShowStamp(bombBinder.ResultTournamentPage);
         }
 
         private IEnumerator ConvertCoroutine()
@@ -82,6 +98,16 @@ namespace FactoryAssembly
                 {
                     textEntry.gameObject.SetActive(false);
                 }
+            }
+        }
+
+        private void ShowStamp(ResultPage page)
+        {
+            if (page.gameObject.activeInHierarchy)
+            {
+                page.Stamp.SetActive(true);
+                _audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Stamp, page.Stamp.transform);
+                KTInputManager.Instance.AddInteractionPunch(page.Stamp.transform.position, 1.0f, 0.75f, 0.3f);
             }
         }
     }

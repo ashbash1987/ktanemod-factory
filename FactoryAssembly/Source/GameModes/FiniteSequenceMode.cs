@@ -45,7 +45,7 @@ namespace FactoryAssembly
         {
             base.Setup(room);
 
-            InvoiceData.Enabled = true;
+            InvoiceData.Start();
 
             foreach (FactoryBomb bomb in Bombs)
             {
