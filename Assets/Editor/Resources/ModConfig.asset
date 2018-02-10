@@ -48,6 +48,6 @@ MonoBehaviour:
     array of friendly names for the currently supported factory modes; the index of
     each name corresponds to the \"Factory Mode\" component 'count' for that given
     gameplay mode.[/td]\r\n[/tr]\r\n[/table]\r"
-  version: v0.5.3
+  version: v0.6.0
   outputFolder: E:\Games\SteamLibrary\steamapps\common\Keep Talking and Nobody Explodes\mods
   previewImage: {fileID: 2800000, guid: 38cd03a071b6af144b9e1466079ba64e, type: 3}
