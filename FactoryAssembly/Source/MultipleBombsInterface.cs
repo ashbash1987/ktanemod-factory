@@ -78,6 +78,8 @@ namespace FactoryAssembly
             Vector3 position = targetTransform.position;
             Vector3 eulerAngles = targetTransform.eulerAngles;
 
+            Logging.Log("Creating bomb using MultipleBombs...");
+
             //Current expected method signature is:
             //MultipleBombsAssembly.MultipleBombs.createBomb(string missionId, Vector3 position, Vector3 eulerAngles, List<KMBombInfo> knownBombInfos)
             return (Bomb)_createBombMethod.Invoke(_multipleBombsObject, new object[] { missionID, position, eulerAngles, null });

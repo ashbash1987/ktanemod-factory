@@ -48,6 +48,11 @@ namespace FactoryAssembly
             InfiniteSequenceGlobalTimeStrikes,
         }
 
+        internal static Type GetGameModeType(this GameMode gameMode)
+        {
+            return gameMode.GetAttributeOfType<GameModeTypeAttribute>().Type;
+        }
+
         internal static string GetFriendlyName(this GameMode gameMode)
         {
             return gameMode.GetAttributeOfType<GameModeTypeAttribute>().FriendlyName;

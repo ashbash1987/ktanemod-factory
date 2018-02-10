@@ -85,12 +85,12 @@ namespace FactoryAssembly
             }
         }
 
-        private static GameMode? GetGameModeForMission(Mission mission)
+        internal static GameMode? GetGameModeForMission(Mission mission)
         {
             return GetGameModeForMission(mission.ID);
         }
 
-        private static GameMode? GetGameModeForMission(string missionID)
+        internal static GameMode? GetGameModeForMission(string missionID)
         {
             GameMode gameMode;
             if (_discoveredMissions.TryGetValue(missionID, out gameMode))
