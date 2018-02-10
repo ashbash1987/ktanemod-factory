@@ -996,6 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetTexture: {fileID: 8400000, guid: 2afe00d9402211245a589615a60357b7, type: 2}
   Invoice: {fileID: 1102890159900926}
+  ConvertedStampY: -0.0504
 --- !u!114 &114411461718099984
 MonoBehaviour:
   m_ObjectHideFlags: 1
