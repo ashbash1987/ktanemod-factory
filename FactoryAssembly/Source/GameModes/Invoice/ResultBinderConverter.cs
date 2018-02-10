@@ -11,6 +11,8 @@ namespace FactoryAssembly
 
         public GameObject Invoice = null;
 
+        public float ConvertedStampY = -0.05040f;
+
         internal bool Converted
         {
             get;
@@ -106,6 +108,11 @@ namespace FactoryAssembly
             if (page.gameObject.activeInHierarchy)
             {
                 page.Stamp.SetActive(true);
+
+                Vector3 position = page.Stamp.transform.localPosition;
+                position.y = ConvertedStampY;
+                page.Stamp.transform.localPosition = position;
+
                 _audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Stamp, page.Stamp.transform);
                 KTInputManager.Instance.AddInteractionPunch(page.Stamp.transform.position, 1.0f, 0.75f, 0.3f);
             }
