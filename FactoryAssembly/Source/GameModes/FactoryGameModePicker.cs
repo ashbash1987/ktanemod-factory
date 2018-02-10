@@ -37,7 +37,8 @@ namespace FactoryAssembly
                 //Otherwise, remove from the previously discovered dictionary
                 else
                 {
-                    if (_discoveredMissions.Remove(mission.ID))
+                    //Don't want to re-add component pools into the custom mission though, otherwise the bomb generator won't be happy!
+                    if (_discoveredMissions.Remove(mission.ID) && mission.ID != ModMission.CUSTOM_MISSION_ID)
                     {
                         AddComponentPoolToMission(mission, FACTORY_MODE_POOL_ID, (int)previousDiscoveredGameMode.Value);
 
@@ -141,9 +142,25 @@ namespace FactoryAssembly
             //Default suitability is null
             GameMode? gameMode = null;
 
+            Logging.Log($"Discovering component pools for mission {mission.name}...");
+            for (int componentPoolIndex = 0; componentPoolIndex < mission.GeneratorSetting.ComponentPools.Count; componentPoolIndex++)
+            {
+                ComponentPool pool = mission.GeneratorSetting.ComponentPools[componentPoolIndex];
+
+                if (pool.ModTypes != null)
+                {
+                    Logging.Log($"  {componentPoolIndex + 1}. Mod Types: {{{string.Join(", ", pool.ModTypes.ToArray())}}} ({pool.Count})");
+                }
+                else
+                {
+                    Logging.Log($"  {componentPoolIndex + 1}. No Mod Types.");
+                }                
+            }
+
             for (int componentPoolIndex = mission.GeneratorSetting.ComponentPools.Count - 1; componentPoolIndex >= 0; componentPoolIndex--)
             {
                 ComponentPool pool = mission.GeneratorSetting.ComponentPools[componentPoolIndex];
+
                 if (pool.ModTypes != null && pool.ModTypes.Count == 1)
                 {
                     switch (pool.ModTypes[0])
@@ -155,12 +172,14 @@ namespace FactoryAssembly
                             //If the game mode is safe to run, then safely remove the component pool
                             if (!gameMode.Value.RequiresMultipleBombs() || MultipleBombsInterface.CanAccess)
                             {
+                                Logging.Log($"Mission {mission.ID} has component pool configuration for '{gameMode.Value.GetFriendlyName()}'; removing from component pools.");
+
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
                             }
                             //Else the game mode is not safe to run, but we still need to return a valid gamemode, so still remove the component pool, but force into 'static' mode
                             else if (mustReturnValid)
                             {
-                                Logging.Log("Mission {0} should be configured for '{1}', but MultipleBombs is required and cannot be accessed.", mission.ID, gameMode.Value.GetFriendlyName());
+                                Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed.");
 
                                 gameMode = GameMode.Static;
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
@@ -168,7 +187,7 @@ namespace FactoryAssembly
                             //Else the game mode is not safe to run at all, so return null and re-add a multiple bombs component pool to drive the point home in the bomb binder
                             else
                             {
-                                Logging.Log("Mission {0} should be configured for '{1}', but MultipleBombs is required and cannot be accessed.", mission.ID, gameMode.Value.GetFriendlyName());
+                                Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed; re-adding MultipleBombs component pool.");
 
                                 gameMode = null;
                                 AddComponentPoolToMission(mission, MULTIPLE_BOMBS_POOL_ID, 0);
@@ -179,7 +198,12 @@ namespace FactoryAssembly
                             //This is here to "fix" custom missions with multiple-bombs pools also added to them when trying to manually generate additional bombs for 'infinite' modes
                             if (tidyOtherComponents)
                             {
+                                Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', and component needs tidying away for reasons.");
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
+                            }
+                            else
+                            {
+                                Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', but doesn't need tidying away.");
                             }
                             break;
 
@@ -192,11 +216,11 @@ namespace FactoryAssembly
 
             if (gameMode.HasValue)
             {
-                Logging.Log("Mission {0} configured for '{1}'.", mission.ID, gameMode.Value.GetFriendlyName());
+                Logging.Log($"Mission {mission.ID} configured for '{gameMode.Value.GetFriendlyName()}'.");
             }
             else
             {
-                Logging.Log("Mission {0} not configured for any special gamemode.", mission.ID);
+                Logging.Log($"Mission {mission.ID} not configured for any special gamemode.");
             }
 
             return gameMode;
@@ -204,7 +228,7 @@ namespace FactoryAssembly
 
         private static void AddComponentPoolToMission(Mission mission, string componentName, int count)
         {
-            mission.GeneratorSetting.ComponentPools.Add(new ComponentPool() { Count = count, AllowedSources = ComponentPool.ComponentSource.Mods, SpecialComponentType = SpecialComponentTypeEnum.None, ModTypes = new List<string>() { componentName } });
+            mission.GeneratorSetting.ComponentPools.Add(new ComponentPool() { Count = count, AllowedSources = ComponentPool.ComponentSource.Mods, SpecialComponentType = SpecialComponentTypeEnum.None, ComponentTypes = new List<ComponentTypeEnum>(), AllSolvableVetoComponentTypes = new List<ComponentTypeEnum>(), ModTypes = new List<string>() { componentName } });
         }
     }
 }

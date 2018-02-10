@@ -9,6 +9,11 @@ namespace FactoryAssembly
         {
             get
             {
+                if (Bombs.Count() == 0)
+                {
+                    return float.PositiveInfinity;
+                }
+
                 return Bombs.Min((x) => x.Timer.TimeRemaining);
             }
         }
