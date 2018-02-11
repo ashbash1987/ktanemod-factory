@@ -271,7 +271,17 @@ namespace FactoryAssembly
 
             bombData.RealWorldEndTime = DateTime.Now;
             bombData.EndRemainingTime = Mathf.Max(Timer.TimeRemaining, 0.0f);
-            bombData.EndStrikesCount = InternalBomb.NumStrikes + 1;
+
+            //Because a bomb can end by timer w/o strike as well, so need to check that edge case.
+            if (Timer.TimeRemaining <= 0.0f)
+            {
+                bombData.EndStrikesCount = InternalBomb.NumStrikes;
+            }
+            else
+            {
+                bombData.EndStrikesCount = InternalBomb.NumStrikes + 1;
+            }
+            
             bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
 
             bombData.Complete = true;
