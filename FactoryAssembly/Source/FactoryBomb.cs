@@ -254,7 +254,7 @@ namespace FactoryAssembly
             }
 
             bombData.RealWorldEndTime = DateTime.Now;
-            bombData.EndRemainingTime = Timer.TimeRemaining;
+            bombData.EndRemainingTime = Mathf.Max(Timer.TimeRemaining, 0.0f);
             bombData.EndStrikesCount = InternalBomb.NumStrikes;
             bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
 
@@ -270,7 +270,7 @@ namespace FactoryAssembly
             }
 
             bombData.RealWorldEndTime = DateTime.Now;
-            bombData.EndRemainingTime = Timer.TimeRemaining;
+            bombData.EndRemainingTime = Mathf.Max(Timer.TimeRemaining, 0.0f);
             bombData.EndStrikesCount = InternalBomb.NumStrikes;
             bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
 

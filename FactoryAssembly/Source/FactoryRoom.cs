@@ -75,7 +75,16 @@ namespace FactoryAssembly
 
             InvoiceData.ClearData();
 
-            Mission mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
+            Mission mission = null;
+            if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID)
+            {
+                mission = GameplayState.CustomMission;
+            }
+            else
+            {
+                mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
+            }
+            
             InvoiceData.MissionName = mission?.DisplayName;
 
             if (string.IsNullOrEmpty(InvoiceData.MissionName))
