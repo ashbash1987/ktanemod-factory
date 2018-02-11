@@ -271,7 +271,7 @@ namespace FactoryAssembly
 
             bombData.RealWorldEndTime = DateTime.Now;
             bombData.EndRemainingTime = Mathf.Max(Timer.TimeRemaining, 0.0f);
-            bombData.EndStrikesCount = InternalBomb.NumStrikes;
+            bombData.EndStrikesCount = InternalBomb.NumStrikes + 1;
             bombData.SolvedModuleCount = InternalBomb.GetSolvedComponentCount();
 
             bombData.Complete = true;
