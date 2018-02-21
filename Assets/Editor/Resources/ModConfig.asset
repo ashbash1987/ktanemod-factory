@@ -13,16 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Factory
   title: Factory
-  description: "[h1]Intro[/h1]\r\nIn this gameplay room, work on a production line
-    with a conveyor belt bringing you bomb after bomb to defuse before they get shipped
-    out!\r\n\r\n[h1]WORK IN PROGRESS[/h1]\r\nAs this is a work in progress, expect
-    things to change drastically from version to version. At the moment, the design
-    is not particularly finalised, but at the very least the gameplay mechanic is
-    in place!\r\n\r\n[h1]Mod Requirements[/h1]\r\nFor all modes requiring more than
-    1 bomb, this room currently requires the Multiple Bombs mod to configure the game,
-    with the ability to spawn up-to 32 bombs.\r\n\r\n[h1]Gamemodes[/h1]\r\nThere are
-    currently 9 different gamemodes available within the Factory, some of which are
-    just combinations of variations, which are the following:\r\n[list]\r\n[*]Static:
+  description: "(Not a drill - this is a new workshop ID now, I accidentally deleted
+    the old one...)\n\n[h1]Intro[/h1]\r\nIn this gameplay room, work on a production
+    line with a conveyor belt bringing you bomb after bomb to defuse before they get
+    shipped out!\r\n\r\n[h1]WORK IN PROGRESS[/h1]\r\nAs this is a work in progress,
+    expect things to change drastically from version to version. At the moment, the
+    design is not particularly finalised, but at the very least the gameplay mechanic
+    is in place!\r\n\r\n[h1]Mod Requirements[/h1]\r\nFor all modes requiring more
+    than 1 bomb, this room currently requires the Multiple Bombs mod to configure
+    the game, with the ability to spawn up-to 32 bombs.\r\n\r\n[h1]Gamemodes[/h1]\r\nThere
+    are currently 9 different gamemodes available within the Factory, some of which
+    are just combinations of variations, which are the following:\r\n[list]\r\n[*]Static:
     Just like any normal gameplay room - all bombs are spawned in straight away and
     are all immediately avaiable.\r\n[*]Finite: A sequence mode whereby bombs come
     by one-by-one on the conveyor belt.\r\n[*]Infinite: Like finite, but with no upper
