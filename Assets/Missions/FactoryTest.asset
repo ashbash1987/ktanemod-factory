@@ -15,8 +15,6 @@ MonoBehaviour:
   Sections:
   - Title: TEST
     MissionIDs:
-    - SingleStatic
-    - SingleSequence
-    - MultipleStatic
-    - MultipleSequence
-    - Infinite
+    - SequenceTest
+    - InfiniteTest
+    - InfiniteGlobalTimerTest

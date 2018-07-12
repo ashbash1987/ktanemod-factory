@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.Missions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -13,20 +16,37 @@ namespace FactoryAssembly
     /// </remarks>
     internal static class MultipleBombsInterface
     {
+        public enum AccessAPIVersion
+        {
+            None,
+            V1,
+            V2
+        }
+
         private const string MULTIPLE_BOMBS_TYPE_NAME = "MultipleBombsAssembly.MultipleBombs";
         private const string CREATE_BOMB_METHOD_NAME = "createBomb";
 
-        internal static bool CanAccess
+        internal static AccessAPIVersion AccessVersion
         {
             get
             {
-                return _createBombMethod != null;
+                if (_createBombMethodV1 != null)
+                {
+                    return AccessAPIVersion.V1;
+                }
+                if (_createBombMethodV2 != null)
+                {
+                    return AccessAPIVersion.V2;
+                }
+
+                return AccessAPIVersion.None;
             }
         }
 
         private static Type _multipleBombsType = null;
         private static object _multipleBombsObject = null;
-        private static MethodInfo _createBombMethod = null;
+        private static MethodInfo _createBombMethodV1 = null;
+        private static MethodInfo _createBombMethodV2 = null;
 
         /// <summary>
         /// Called from FactoryService.OnStateChange upon entering 'Setup' state. Re-ensures that we have access to MultipleBombs via reflection.
@@ -38,7 +58,8 @@ namespace FactoryAssembly
             //Reset all the reflected fields first
             _multipleBombsType = null;
             _multipleBombsObject = null;
-            _createBombMethod = null;
+            _createBombMethodV1 = null;
+            _createBombMethodV2 = null;
 
             //Try to find the type
             _multipleBombsType = ReflectionHelper.FindType(MULTIPLE_BOMBS_TYPE_NAME);
@@ -56,33 +77,50 @@ namespace FactoryAssembly
                 return;
             }
 
-            //Try to find the create bomb method
-            _createBombMethod = _multipleBombsType.GetMethod(CREATE_BOMB_METHOD_NAME, BindingFlags.NonPublic | BindingFlags.Instance);
-            if (_createBombMethod == null)
+            //Try to find an appropriate create bomb method
+            MethodInfo[] methods = _multipleBombsType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where((x) => x.Name == CREATE_BOMB_METHOD_NAME).ToArray();
+
+            //V1 Signature: MultipleBombsAssembly.MultipleBombs.createBomb(string missionId, Vector3 position, Vector3 eulerAngles, List<KMBombInfo> knownBombInfos)
+            _createBombMethodV1 = methods.FirstOrDefault((x) => x.GetParameters().Select(y => y.ParameterType).SequenceEqual(new Type[] { typeof(string), typeof(Vector3), typeof(Vector3), typeof(List<KMBombInfo>) }));
+
+            //V2 Signature: MultipleBombsAssembly.MultipleBombs.createBomb(GeneratorSetting generatorSetting, Vector3 position, Vector3 eulerAngles, int seed, List<KMBombInfo> knownBombInfos)
+            _createBombMethodV2 = methods.FirstOrDefault((x) => x.GetParameters().Select(y => y.ParameterType).SequenceEqual(new Type[] { typeof(int), typeof(Vector3), typeof(Vector3), typeof(int), typeof(List<KMBombInfo>) }));
+
+            if (_createBombMethodV1 != null)
             {
-                Logging.Log("Cannot find the MultipleBombs create bomb method - MultipleBombs gamemodes are disabled.");
+                Logging.Log("MultipleBombs gamemodes are enabled (using V1 create bomb method).");
+            }
+            else if (_createBombMethodV2 != null)
+            {
+                Logging.Log("MultipleBombs gamemodes are enabled (using V2 create bomb method).");
+            }
+            else
+            {
+                Logging.Log("Cannot find a valid MultipleBombs create bomb method - MultipleBombs gamemodes are disabled.");
                 return;
             }
-
-            Logging.Log("MultipleBombs gamemodes are enabled.");
         }
 
-        internal static Bomb CreateBomb(string missionID, Transform targetTransform)
+        internal static Bomb CreateBomb(string missionID, int bombIndex, Transform targetTransform)
         {
-            if (!CanAccess)
-            {
-                Logging.Log("Tried to create a bomb, but MultipleBombs cannot be accessed, so cannot create a bomb.");
-                return null;
-            }
-
             Vector3 position = targetTransform.position;
             Vector3 eulerAngles = targetTransform.eulerAngles;
 
-            Logging.Log("Creating bomb using MultipleBombs...");
+            switch (AccessVersion)
+            {
+                case AccessAPIVersion.V1:
+                    Logging.Log("Creating bomb using MultipleBombs V1...");
+                    return (Bomb)_createBombMethodV1.Invoke(_multipleBombsObject, new object[] { missionID, position, eulerAngles, null });
 
-            //Current expected method signature is:
-            //MultipleBombsAssembly.MultipleBombs.createBomb(string missionId, Vector3 position, Vector3 eulerAngles, List<KMBombInfo> knownBombInfos)
-            return (Bomb)_createBombMethod.Invoke(_multipleBombsObject, new object[] { missionID, position, eulerAngles, null });
+                case AccessAPIVersion.V2:
+                    Logging.Log("Creating bomb using MultipleBombs V2...");
+                    int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+                    return (Bomb)_createBombMethodV2.Invoke(_multipleBombsObject, new object[] { bombIndex, position, eulerAngles, seed, null });
+
+                default:
+                    Logging.Log("Tried to create a bomb, but MultipleBombs cannot be accessed, so cannot create a bomb.");
+                    return null;
+            }
         }
     }
 }

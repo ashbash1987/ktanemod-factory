@@ -96,7 +96,7 @@ namespace FactoryAssembly
                 foreach (GameMode gameMode in Enum.GetValues(typeof(GameMode)))
                 {
                     bool requireMultipleBombs = gameMode.RequiresMultipleBombs();
-                    modeSupport.Add(!requireMultipleBombs || MultipleBombsInterface.CanAccess);
+                    modeSupport.Add(!requireMultipleBombs || MultipleBombsInterface.AccessVersion != MultipleBombsInterface.AccessAPIVersion.None);
                 }
 
                 return modeSupport.ToArray();

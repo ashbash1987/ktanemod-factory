@@ -42,7 +42,7 @@ namespace FactoryAssembly
                     {
                         AddComponentPoolToMission(mission, FACTORY_MODE_POOL_ID, (int)previousDiscoveredGameMode.Value);
 
-                        if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && !MultipleBombsInterface.CanAccess)
+                        if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && MultipleBombsInterface.AccessVersion == MultipleBombsInterface.AccessAPIVersion.None)
                         {
                             AddComponentPoolToMission(mission, MULTIPLE_BOMBS_POOL_ID, 0);
                         }                        
@@ -50,13 +50,13 @@ namespace FactoryAssembly
                 }
             }
             //Otherwise, there was a previous change and not forcing it, and it requires MultipleBombs, but MultipleBombs cannot be accessed, then remove from the previously discovered dictionary
-            else if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && !MultipleBombsInterface.CanAccess)
+            else if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && MultipleBombsInterface.AccessVersion == MultipleBombsInterface.AccessAPIVersion.None)
             {
                 _discoveredMissions.Remove(mission.ID);
 
                 AddComponentPoolToMission(mission, FACTORY_MODE_POOL_ID, (int)previousDiscoveredGameMode.Value);
 
-                if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && !MultipleBombsInterface.CanAccess)
+                if (previousDiscoveredGameMode.HasValue && previousDiscoveredGameMode.Value.RequiresMultipleBombs() && MultipleBombsInterface.AccessVersion == MultipleBombsInterface.AccessAPIVersion.None)
                 {
                     AddComponentPoolToMission(mission, MULTIPLE_BOMBS_POOL_ID, 0);
                 }
@@ -170,7 +170,7 @@ namespace FactoryAssembly
                             gameMode = (GameMode)factoryModeIndex;
 
                             //If the game mode is safe to run, then safely remove the component pool
-                            if (!gameMode.Value.RequiresMultipleBombs() || MultipleBombsInterface.CanAccess)
+                            if (!gameMode.Value.RequiresMultipleBombs() || MultipleBombsInterface.AccessVersion != MultipleBombsInterface.AccessAPIVersion.None)
                             {
                                 Logging.Log($"Mission {mission.ID} has component pool configuration for '{gameMode.Value.GetFriendlyName()}'; removing from component pools.");
 

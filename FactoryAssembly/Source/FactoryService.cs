@@ -63,9 +63,8 @@ namespace FactoryAssembly
                     if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID && _fromSetupRoom)
                     {
                         FactoryGameModePicker.UpdateMission(GameplayState.CustomMission, true, false, true);
-
-                        StartCoroutine(FixCustomMission());
                     }
+
                     _fromSetupRoom = false;
 
                     _binderConverter.Revert();
@@ -82,24 +81,6 @@ namespace FactoryAssembly
 
                 default:
                     break;
-            }
-        }
-
-        private IEnumerator FixCustomMission()
-        {
-            for (int frameCount = 0; frameCount < 4; ++frameCount)
-            {
-                yield return null;
-            }
-
-            string missionID = SceneManager.Instance.GameplayState.Mission.ID;
-
-            FactoryGameModePicker.GameMode? gameMode = FactoryGameModePicker.GetGameModeForMission(missionID);
-            if (gameMode.HasValue && gameMode.Value.GetGameModeType() == typeof(InfiniteSequenceMode))
-            {
-                SceneManager.Instance.GameplayState.Mission.name = "__fixedCustomMission";
-                FactoryGameModePicker.UpdateMission(SceneManager.Instance.GameplayState.Mission, true, true, true);
-                SceneManager.Instance.GameplayState.Mission.name = missionID;
             }
         }
     }

@@ -24,7 +24,7 @@ namespace FactoryAssembly
         {
             yield return new WaitForSeconds(0.2f);
 
-            FactoryBomb nextBomb = AddAnotherBomb();
+            FactoryBomb nextBomb = AddAnotherBomb(InvoiceData.BombCount);
             nextBomb.SetupStartPosition(Room.InitialSpawn);
             _bombQueue.Enqueue(nextBomb);
         }

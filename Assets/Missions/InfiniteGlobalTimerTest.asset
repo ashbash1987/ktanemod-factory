@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -548183353, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
-  m_Name: MultipleStatic
+  m_Name: InfiniteGlobalTimerTest
   m_EditorClassIdentifier: 
-  DisplayName: 'TEST: Multiple Static'
-  Description: Multiple bombs, in static game mode.
+  DisplayName: Infinite Global Timer Test
+  Description: Test the infinite sequence mission declaration with global timer.
   GeneratorSetting:
     TimeLimit: 300
     NumStrikes: 3
@@ -20,15 +20,15 @@ MonoBehaviour:
     FrontFaceOnly: 0
     OptionalWidgetCount: 5
     ComponentPools:
+    - Count: 6
+      AllowedSources: 0
+      ComponentTypes: 
+      SpecialComponentType: 0
+      ModTypes:
+      - Factory Mode
     - Count: 1
       AllowedSources: 1
       ComponentTypes: 02000000
       SpecialComponentType: 0
       ModTypes: []
-    - Count: 1
-      AllowedSources: 2
-      ComponentTypes: 
-      SpecialComponentType: 0
-      ModTypes:
-      - Multiple Bombs
   PacingEventsEnabled: 0

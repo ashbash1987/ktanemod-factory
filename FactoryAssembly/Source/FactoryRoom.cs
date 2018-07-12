@@ -127,18 +127,20 @@ namespace FactoryAssembly
             _audio.PlaySoundAtTransform(_data.ConveyorAudio.name, _data.ConveyorTop);
         }
 
-        internal Bomb CreateBombWithCurrentMission()
+        internal Bomb CreateBombWithCurrentMission(int bombIndex)
         {
-            return CreateBomb(GameplayState.MissionToLoad);
+            return CreateBomb(GameplayState.MissionToLoad, bombIndex);
         }
 
-        internal Bomb CreateBomb(string missionID)
+        internal Bomb CreateBomb(string missionID, int bombIndex)
         {
             //Protection in case MultipleBombs cannot be accessed
-            if (!MultipleBombsInterface.CanAccess)
+            if (MultipleBombsInterface.AccessVersion == MultipleBombsInterface.AccessAPIVersion.None)
             {
                 return null;
             }
+
+            Logging.Log("Creating bomb {0}@{1}", missionID, bombIndex);
 
             //Need to 'undo' RoundStarted to prevent the game from auto-starting the next bomb
             bool roundStarted = SceneManager.Instance.GameplayState.RoundStarted;
@@ -146,7 +148,7 @@ namespace FactoryAssembly
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, false, null);
 
             //Interact with MultipleBombs to generate us a bomb
-            Bomb bomb = MultipleBombsInterface.CreateBomb(missionID, _data.VanillaBombSpawn);
+            Bomb bomb = MultipleBombsInterface.CreateBomb(missionID, bombIndex, _data.VanillaBombSpawn);
 
             //Revert the RoundStarted value back to what it was
             roundStartedProperty.SetValue(SceneManager.Instance.GameplayState, roundStarted, null);

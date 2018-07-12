@@ -71,9 +71,9 @@ namespace FactoryAssembly
         {
         }
 
-        protected FactoryBomb AddAnotherBomb()
+        protected FactoryBomb AddAnotherBomb(int bombIndex)
         {
-            Bomb newBomb = Room.CreateBombWithCurrentMission();
+            Bomb newBomb = Room.CreateBombWithCurrentMission(bombIndex);
             FactoryBomb newFactoryBomb = newBomb.gameObject.AddComponent<FactoryBomb>();
             _bombs.Add(newFactoryBomb);
 
