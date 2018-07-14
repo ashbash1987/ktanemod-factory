@@ -32,4 +32,10 @@ MonoBehaviour:
       ComponentTypes: 02000000
       SpecialComponentType: 0
       ModTypes: []
+    - Count: 1
+      AllowedSources: 1
+      ComponentTypes: 
+      SpecialComponentType: 0
+      ModTypes:
+      - Multiple Bombs:1:{"TimeLimit":300.0,"NumStrikes":3,"TimeBeforeNeedyActivation":90,"FrontFaceOnly":false,"OptionalWidgetCount":5,"ComponentPools":[{"Count":1,"AllowedSources":1,"ComponentTypes":[4],"SpecialComponentType":0,"ModTypes":[]}]}
   PacingEventsEnabled: 0

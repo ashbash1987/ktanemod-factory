@@ -173,7 +173,6 @@ namespace FactoryAssembly
                             if (!gameMode.Value.RequiresMultipleBombs() || MultipleBombsInterface.AccessVersion != MultipleBombsInterface.AccessAPIVersion.None)
                             {
                                 Logging.Log($"Mission {mission.ID} has component pool configuration for '{gameMode.Value.GetFriendlyName()}'; removing from component pools.");
-
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
                             }
                             //Else the game mode is not safe to run, but we still need to return a valid gamemode, so still remove the component pool, but force into 'static' mode

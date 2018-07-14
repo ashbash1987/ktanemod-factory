@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FactoryAssembly
 {
@@ -9,12 +8,11 @@ namespace FactoryAssembly
         private APIProperties _properties = null;
         private ResultBinderConverter _binderConverter = null;
 
-        private bool _fromSetupRoom = false;
+        private static bool _fromSetupRoom = false;
 
         private void Awake()
         {
             _gameInfo = GetComponent<KMGameInfo>();
-            _gameInfo.OnStateChange += OnStateChange;
 
             _properties = GetComponentInChildren<APIProperties>();
             _properties.Add("SupportedModes", () => FactoryGameModePicker.GetModeNames, null);
@@ -27,16 +25,15 @@ namespace FactoryAssembly
         {
             InvoiceData.Enabled = false;
             InvoiceData.ClearData();
+
+            _gameInfo.OnStateChange += OnStateChange;
         }
 
         private void OnDisable()
         {
             InvoiceData.Enabled = false;
             InvoiceData.ClearData();
-        }
 
-        private void OnDestroy()
-        {
             _gameInfo.OnStateChange -= OnStateChange;
         }
 
