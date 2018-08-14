@@ -15,26 +15,23 @@ MonoBehaviour:
   title: Factory
   description: "[h1]Intro[/h1]\r\nIn this gameplay room, work on a production line
     with a conveyor belt bringing you bomb after bomb to defuse before they get shipped
-    out!\r\n\r\n[h1]WORK IN PROGRESS[/h1]\r\nAs this is a work in progress, expect
-    things to change drastically from version to version. At the moment, the design
-    is not particularly finalised, but at the very least the gameplay mechanic is
-    in place!\r\n\r\n[h1]Mod Requirements[/h1]\r\nFor all modes requiring more than
-    1 bomb, this room currently requires the Multiple Bombs mod to configure the game,
-    with the ability to spawn up-to 32 bombs.\r\n\r\n[h1]Gamemodes[/h1]\r\nThere are
-    currently 9 different gamemodes available within the Factory, some of which are
-    just combinations of variations, which are the following:\r\n[list]\r\n[*]Static:
-    Just like any normal gameplay room - all bombs are spawned in straight away and
-    are all immediately avaiable.\r\n[*]Finite: A sequence mode whereby bombs come
-    by one-by-one on the conveyor belt.\r\n[*]Infinite: Like finite, but with no upper
-    bound to the number of bombs possible.\r\n[*]+ Global Timer: Each successive bomb
-    in the sequence will share whatever the remaining time on previous bomb was.\r\n[*]+
-    Global Strikes: Each successive bomb in the sequence will share whatever the number
-    of strikes on the previous bomb had.\r\n[/list]\r\n\r\n[h1]Modding Info[/h1]\r\nAs
-    of v0.4.2, a new component pool ID discovery process has been added, meaning all
-    previously-defined missions will work in static mode only in the Factory gameplay
-    room. To make use of the different possible gamemodes for missions, add a component
-    pool with the ID \"Factory Mode\" and with a 'count' of {x}, replacing {x} with
-    a value from the table below, depending on what gamemode to use:\r\n[table]\r\n[tr]\r\n\t[th]'Count'
+    out!\r\n\r\n[h1]Mod Requirements[/h1]\r\nFor all modes requiring more than 1 bomb,
+    this room currently requires the Multiple Bombs mod to configure the game, with
+    the ability to spawn up-to 32 bombs.\r\n\r\n[h1]Gamemodes[/h1]\r\nThere are currently
+    9 different gamemodes available within the Factory, some of which are just combinations
+    of variations, which are the following:\r\n[list]\r\n[*]Static: Just like any
+    normal gameplay room - all bombs are spawned in straight away and are all immediately
+    avaiable.\r\n[*]Finite: A sequence mode whereby bombs come by one-by-one on the
+    conveyor belt.\r\n[*]Infinite: Like finite, but with no upper bound to the number
+    of bombs possible.\r\n[*]+ Global Timer: Each successive bomb in the sequence
+    will share whatever the remaining time on previous bomb was.\r\n[*]+ Global Strikes:
+    Each successive bomb in the sequence will share whatever the number of strikes
+    on the previous bomb had.\r\n[/list]\r\n\r\n[h1]Modding Info[/h1]\r\nAs of v0.4.2,
+    a new component pool ID discovery process has been added, meaning all previously-defined
+    missions will work in static mode only in the Factory gameplay room. To make use
+    of the different possible gamemodes for missions, add a component pool with the
+    ID \"Factory Mode\" and with a 'count' of {x}, replacing {x} with a value from
+    the table below, depending on what gamemode to use:\r\n[table]\r\n[tr]\r\n\t[th]'Count'
     Index[/th]\r\n\t[th]Game Mode[/th]\r\n[/tr]\r\n[tr]\r\n\t[td]0[/td]\r\n\t[td]Static[/td]\r\n[/tr]\r\n[tr]\r\n\t[td]1[/td]\r\n\t[td]Finite
     Sequence[/td]\r\n[/tr]\r\n[tr]\r\n\t[td]2[/td]\r\n\t[td]Finite Sequence + Global
     Time[/td]\r\n[/tr]\r\n[tr]\r\n\t[td]3[/td]\r\n\t[td]Finite Sequence + Global Strikes[/td]\r\n[/tr]\r\n[tr]\r\n\t[td]4[/td]\r\n\t[td]Finite
