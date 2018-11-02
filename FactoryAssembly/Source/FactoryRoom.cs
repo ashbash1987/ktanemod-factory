@@ -198,14 +198,22 @@ namespace FactoryAssembly
         {
             bool warningTime = GameMode != null ? (GameMode.RemainingTime < _data.WarningTime) : false;
 
-            float lightIntensity = _lightsOn ? (warningTime ? _data.LightWarningIntensity : _data.LightOnIntensity) : _data.LightOffIntensity;
-            Color ambientColor = _lightsOn ? (warningTime ? _data.AmbientWarningColor : _data.AmbientOnColor) : _data.AmbientOffColor;
+            _data.WarningLight.gameObject.SetActive(warningTime && _data.EnableWarningLights);
 
-            _data.WarningLight.gameObject.SetActive(warningTime);
+            float lightIntensity = _lightsOn ? (warningTime ? _data.LightWarningIntensity : _data.LightOnIntensity) : _data.LightOffIntensity;
+            Color ambientColor = _data.EnableAmbient ? (_lightsOn ? (warningTime ? _data.AmbientWarningColor : _data.AmbientOnColor) : _data.AmbientOffColor) : Color.black;
 
             foreach (Light light in _data.NormalLights)
             {
-                light.intensity = lightIntensity;
+                if (_data.EnableNormalLights)
+                {
+                    light.gameObject.SetActive(true);
+                    light.intensity = lightIntensity;
+                }
+                else
+                {
+                    light.gameObject.SetActive(false);
+                }
             }
 
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;

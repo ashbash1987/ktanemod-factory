@@ -41,15 +41,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>E:\Program Files\Unity2017.1.0p4\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>E:\Program Files\Unity\2017.1.0p4\Editor\Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>E:\Program Files\Unity2017.1.0p4\Editor\Data\Managed\UnityEditor.dll</HintPath>
+      <HintPath>E:\Program Files\Unity\2017.1.0p4\Editor\Data\Managed\UnityEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>E:\Program Files\Unity2017.1.0p4\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+      <HintPath>E:\Program Files\Unity\2017.1.0p4\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -82,6 +82,14 @@
     <Compile Include="Source\Helpers\Logging.cs" />
     <Compile Include="Source\Helpers\ReflectionHelper.cs" />
     <Compile Include="Source\MultipleBombsInterface.cs" />
+    <Compile Include="Source\Spoopy\Bump.cs" />
+    <Compile Include="Source\Spoopy\CameraPostProcess.cs" />
+    <Compile Include="Source\Spoopy\FakeNeedy.cs" />
+    <Compile Include="Source\Spoopy\FakeStrike.cs" />
+    <Compile Include="Source\Spoopy\GlitchDistort.cs" />
+    <Compile Include="Source\Spoopy\SpoopyScares.cs" />
+    <Compile Include="Source\Spoopy\TorchLight.cs" />
+    <Compile Include="Source\Spoopy\WibblyWobbleTime.cs" />
     <Compile Include="Source\WalkieTalkie.cs" />
     <Compile Include="Source\WarningLight.cs" />
   </ItemGroup>

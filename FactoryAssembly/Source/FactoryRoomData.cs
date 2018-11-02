@@ -19,6 +19,10 @@ namespace FactoryAssembly
         public Light[] NormalLights;
         public WarningLight WarningLight;
 
+        public bool EnableAmbient = true;
+        public bool EnableNormalLights = true;
+        public bool EnableWarningLights = true;
+
         public Color AmbientOffColor = new Color(0.01f, 0.01f, 0.01f);
         public Color AmbientWarningColor = new Color(0.3f, 0.3f, 0.3f);
         public Color AmbientOnColor = new Color(0.4f, 0.4f, 0.4f);
@@ -34,5 +38,7 @@ namespace FactoryAssembly
 
         [Range(0.0f, 180.0f)]
         public float WarningTime = 60.0f;
+
+        public Renderer TVDisplay;
     }
 }
