@@ -1678,6 +1678,7 @@ GameObject:
   - component: {fileID: 95099794941645236}
   - component: {fileID: 114889226494657238}
   - component: {fileID: 114724897050072652}
+  - component: {fileID: 114323063345756728}
   - component: {fileID: 114135023764472282}
   - component: {fileID: 114728671524721558}
   - component: {fileID: 114149544548217256}
@@ -6687,7 +6688,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.9150609, b: 0.8161765, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.8
   m_Range: 8
   m_SpotAngle: 30
@@ -6787,7 +6788,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.75, b: 0.75, a: 1}
+  m_Color: {r: 1, g: 0.98039216, b: 0.9607843, a: 1}
   m_Intensity: 0.8
   m_Range: 8
   m_SpotAngle: 30
@@ -7072,7 +7073,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1683890619030952}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 382423255, guid: f28959e3182420b45b157996f417d88f, type: 3}
   m_Name: 
@@ -7316,6 +7317,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - Standard
+--- !u!114 &114323063345756728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683890619030952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -289456416, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: '{ "halloweenEvent": false }'
+  SettingsPath: 
 --- !u!114 &114331055137591200
 MonoBehaviour:
   m_ObjectHideFlags: 1
