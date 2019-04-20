@@ -44,9 +44,14 @@ namespace FactoryAssembly
             };
         }
 
-        private void Start()
+        private void OnEnable()
         {
             StartCoroutine(ScareLoop());
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
         }
 
         private IEnumerator ScareLoop()

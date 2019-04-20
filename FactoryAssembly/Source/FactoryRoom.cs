@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Missions;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,11 @@ namespace FactoryAssembly
 {
     public class FactoryRoom : MonoBehaviour
     {
+        internal class ModSettings
+        {
+            public bool halloweenEvent = false;
+        }
+
         internal Selectable RoomSelectable
         {
             get;
@@ -85,7 +91,7 @@ namespace FactoryAssembly
                 mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
             }
             
-            InvoiceData.MissionName = mission?.DisplayName;
+            InvoiceData.MissionName = mission?.DisplayNameTerm;
 
             if (string.IsNullOrEmpty(InvoiceData.MissionName))
             {
@@ -99,6 +105,11 @@ namespace FactoryAssembly
             QuickDelay(() => GameMode.Setup(this));
 
             OnLightChange(false);
+
+            KMModSettings modSettings = GetComponent<KMModSettings>();
+            ModSettings activeModSettings = JsonConvert.DeserializeObject<ModSettings>(modSettings.Settings);
+
+            GetComponent<SpoopyScares>().enabled = activeModSettings.halloweenEvent;
         }
 
         /// <summary>
