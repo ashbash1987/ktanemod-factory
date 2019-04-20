@@ -29,13 +29,9 @@ namespace FactoryAssembly
             DateTime firstOfMonth = new DateTime(now.Year, now.Month, 1, 0, 0, 0);
             DayOfWeek firstOfMonthDay = firstOfMonth.DayOfWeek;
 
-            DateTime lastOfMonth = firstOfMonth + TimeSpan.FromDays(DateTime.DaysInMonth(now.Year, now.Month) - 1);
-            DayOfWeek lastOfMonthDay = lastOfMonth.DayOfWeek;
-
             int initialDayOffset = (int)firstOfMonth.DayOfWeek;
-            int lastDayOffset = (int)lastOfMonth.DayOfWeek % 7;
 
-            for (DateTime cellDay = firstOfMonth - TimeSpan.FromDays(initialDayOffset); cellDay <= lastOfMonth + TimeSpan.FromDays(lastDayOffset); cellDay += TimeSpan.FromDays(1.0))
+            for (DateTime cellDay = firstOfMonth - TimeSpan.FromDays(initialDayOffset); cellDay.DayOfWeek != DayOfWeek.Sunday || cellDay.Month <= now.Month || cellDay.Year < now.Year; cellDay += TimeSpan.FromDays(1.0))
             {
                 GameObject cell = Instantiate(CalendarCellTemplate, CalendarGrid.transform);
 
