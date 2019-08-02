@@ -75,22 +75,9 @@ namespace FactoryAssembly
 
             InvoiceData.ClearData();
 
-            Mission mission = null;
-            if (GameplayState.MissionToLoad == ModMission.CUSTOM_MISSION_ID)
-            {
-                mission = GameplayState.CustomMission;
-            }
-            else
-            {
-                mission = MissionManager.Instance.GetMission(GameplayState.MissionToLoad);
-            }
-            
-            InvoiceData.MissionName = mission?.DisplayName;
+            Mission mission = gameplayState.Mission;
 
-            if (string.IsNullOrEmpty(InvoiceData.MissionName))
-            {
-                InvoiceData.MissionName = "Free Play";
-            }
+            InvoiceData.MissionName = mission != null ? Localization.GetLocalizedString(mission.DisplayNameTerm != "Freeplay" ? mission.DisplayNameTerm : "Missions/freeplay_DisplayName") : null;
 
             FactoryGameModePicker.GameMode gameModeEnum;
             GameMode = FactoryGameModePicker.CreateGameMode(GameplayState.MissionToLoad, gameObject, out gameModeEnum);

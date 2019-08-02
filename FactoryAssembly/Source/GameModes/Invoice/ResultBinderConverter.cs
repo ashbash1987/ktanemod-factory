@@ -114,7 +114,7 @@ namespace FactoryAssembly
                 page.Stamp.transform.localPosition = position;
 
                 _audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Stamp, page.Stamp.transform);
-                KTInputManager.Instance.AddInteractionPunch(page.Stamp.transform.position, 1.0f, 0.75f, 0.3f);
+                KTInputManager.Instance.AddInteractionPunch(page.Stamp.transform.position, punchAmplitudeModifier: 1.0f, punchDuration: 0.75f, punchOscillationPeriod: 0.3f);
             }
         }
     }
