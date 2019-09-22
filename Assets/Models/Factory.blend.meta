@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 5a0de9af208e04142adc7add81dc18ca
-timeCreated: 1515615465
-licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: ConveyorPlaceholder
     100002: ConveyorPlaceholderTop
@@ -37,6 +35,21 @@ ModelImporter:
     100058: RollerWall
     100060: RollerWall_001
     100062: Truss
+    100064: Roller.001
+    100066: Roller.002
+    100068: Roller.003
+    100070: Roller.004
+    100072: Roller.005
+    100074: Roller.006
+    100076: Roller.007
+    100078: Roller.008
+    100080: Roller.009
+    100082: Roller.010
+    100084: Roller.011
+    100086: Roller.012
+    100088: Roller.013
+    100090: Roller.014
+    100092: RollerWall.001
     400000: ConveyorPlaceholder
     400002: ConveyorPlaceholderTop
     400004: //RootNode
@@ -69,6 +82,21 @@ ModelImporter:
     400058: RollerWall
     400060: RollerWall_001
     400062: Truss
+    400064: Roller.001
+    400066: Roller.002
+    400068: Roller.003
+    400070: Roller.004
+    400072: Roller.005
+    400074: Roller.006
+    400076: Roller.007
+    400078: Roller.008
+    400080: Roller.009
+    400082: Roller.010
+    400084: Roller.011
+    400086: Roller.012
+    400088: Roller.013
+    400090: Roller.014
+    400092: RollerWall.001
     2300000: ConveyorPlaceholder
     2300002: ConveyorPlaceholderTop
     2300004: Room
@@ -100,6 +128,21 @@ ModelImporter:
     2300056: RollerWall
     2300058: RollerWall_001
     2300060: Truss
+    2300062: Roller.001
+    2300064: Roller.002
+    2300066: Roller.003
+    2300068: Roller.004
+    2300070: Roller.005
+    2300072: Roller.006
+    2300074: Roller.007
+    2300076: Roller.008
+    2300078: Roller.009
+    2300080: Roller.010
+    2300082: Roller.011
+    2300084: Roller.012
+    2300086: Roller.013
+    2300088: Roller.014
+    2300090: RollerWall.001
     3300000: ConveyorPlaceholder
     3300002: ConveyorPlaceholderTop
     3300004: Room
@@ -131,6 +174,21 @@ ModelImporter:
     3300056: RollerWall
     3300058: RollerWall_001
     3300060: Truss
+    3300062: Roller.001
+    3300064: Roller.002
+    3300066: Roller.003
+    3300068: Roller.004
+    3300070: Roller.005
+    3300072: Roller.006
+    3300074: Roller.007
+    3300076: Roller.008
+    3300078: Roller.009
+    3300080: Roller.010
+    3300082: Roller.011
+    3300084: Roller.012
+    3300086: Roller.013
+    3300088: Roller.014
+    3300090: RollerWall.001
     4300000: ConveyorPlaceholderTop
     4300002: ConveyorPlaceholder
     4300004: Room
@@ -162,12 +220,29 @@ ModelImporter:
     4300056: RollerWall_001
     4300058: RollerWall
     4300060: Truss
+    4300062: RollerWall.001
+    4300064: Roller.014
+    4300066: Roller.013
+    4300068: Roller.012
+    4300070: Roller.011
+    4300072: Roller.010
+    4300074: Roller.009
+    4300076: Roller.008
+    4300078: Roller.007
+    4300080: Roller.006
+    4300082: Roller.005
+    4300084: Roller.004
+    4300086: Roller.003
+    4300088: Roller.002
+    4300090: Roller.001
     7400000: Default Take
     9500000: //RootNode
+  externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -180,6 +255,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -204,6 +280,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

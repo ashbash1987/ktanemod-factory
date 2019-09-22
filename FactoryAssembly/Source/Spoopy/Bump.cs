@@ -41,7 +41,7 @@ namespace FactoryAssembly
                 float punchDuration = Random.Range(MinimumPunchDuration, MaximumPunchDuration);
                 float punchOscillationPeriod = Random.Range(MinimumPunchOscillationPeriod, MaximumPunchOscillationPeriod);
 
-                KTInputManager.Instance.AddInteractionPunch(punchPosition, Assets.Scripts.Input.AbstractHapticUtil.HapticType.Interaction, bumpAmount, punchDuration, punchOscillationPeriod);
+                KTInputManager.Instance.AddInteractionPunch(punchPosition, punchAmplitudeModifier: bumpAmount, punchDuration: punchDuration, punchOscillationPeriod: punchOscillationPeriod);
 
                 yield return new WaitForSeconds(0.1f);
                 duration -= 0.1f;

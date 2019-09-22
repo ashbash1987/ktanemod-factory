@@ -142,7 +142,7 @@ namespace FactoryAssembly
             //Default suitability is null
             GameMode? gameMode = null;
 
-            Logging.Log($"Discovering component pools for mission {mission.name}...");
+            /*Logging.Log($"Discovering component pools for mission {mission.name}...");
             for (int componentPoolIndex = 0; componentPoolIndex < mission.GeneratorSetting.ComponentPools.Count; componentPoolIndex++)
             {
                 ComponentPool pool = mission.GeneratorSetting.ComponentPools[componentPoolIndex];
@@ -155,7 +155,7 @@ namespace FactoryAssembly
                 {
                     Logging.Log($"  {componentPoolIndex + 1}. No Mod Types.");
                 }                
-            }
+            }*/
 
             for (int componentPoolIndex = mission.GeneratorSetting.ComponentPools.Count - 1; componentPoolIndex >= 0; componentPoolIndex--)
             {
@@ -172,13 +172,13 @@ namespace FactoryAssembly
                             //If the game mode is safe to run, then safely remove the component pool
                             if (!gameMode.Value.RequiresMultipleBombs() || MultipleBombsInterface.AccessVersion != MultipleBombsInterface.AccessAPIVersion.None)
                             {
-                                Logging.Log($"Mission {mission.ID} has component pool configuration for '{gameMode.Value.GetFriendlyName()}'; removing from component pools.");
+                                //Logging.Log($"Mission {mission.ID} has component pool configuration for '{gameMode.Value.GetFriendlyName()}'; removing from component pools.");
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
                             }
                             //Else the game mode is not safe to run, but we still need to return a valid gamemode, so still remove the component pool, but force into 'static' mode
                             else if (mustReturnValid)
                             {
-                                Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed.");
+                                //Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed.");
 
                                 gameMode = GameMode.Static;
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
@@ -186,7 +186,7 @@ namespace FactoryAssembly
                             //Else the game mode is not safe to run at all, so return null and re-add a multiple bombs component pool to drive the point home in the bomb binder
                             else
                             {
-                                Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed; re-adding MultipleBombs component pool.");
+                                //Logging.Log($"Mission {mission.ID} should be configured for '{gameMode.Value.GetFriendlyName()}', but MultipleBombs is required and cannot be accessed; re-adding MultipleBombs component pool.");
 
                                 gameMode = null;
                                 AddComponentPoolToMission(mission, MULTIPLE_BOMBS_POOL_ID, 0);
@@ -197,12 +197,12 @@ namespace FactoryAssembly
                             //This is here to "fix" custom missions with multiple-bombs pools also added to them when trying to manually generate additional bombs for 'infinite' modes
                             if (tidyOtherComponents)
                             {
-                                Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', and component needs tidying away for reasons.");
+                                //Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', and component needs tidying away for reasons.");
                                 mission.GeneratorSetting.ComponentPools.RemoveAt(componentPoolIndex);
                             }
                             else
                             {
-                                Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', but doesn't need tidying away.");
+                                //Logging.Log($"Mission {mission.ID} has component pool for 'Multiple Bombs', but doesn't need tidying away.");
                             }
                             break;
 
@@ -213,14 +213,14 @@ namespace FactoryAssembly
                 }
             }
 
-            if (gameMode.HasValue)
+            /*if (gameMode.HasValue)
             {
                 Logging.Log($"Mission {mission.ID} configured for '{gameMode.Value.GetFriendlyName()}'.");
             }
             else
             {
                 Logging.Log($"Mission {mission.ID} not configured for any special gamemode.");
-            }
+            }*/
 
             return gameMode;
         }
