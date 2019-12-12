@@ -34,8 +34,6 @@ namespace FactoryAssembly
             Quantity.text = $"x{InvoiceData.BombCount}";
 
             Totals.text = $"{InvoiceData.FinalTime.GetBombTime()}\n{InvoiceData.TotalBombRemainingTime.GetBombTime()}\n{InvoiceData.TotalStrikes}";
-
-            StartCoroutine(ShowStamp());
         }
 
         private string GetMissionProperty(string property)
@@ -51,13 +49,6 @@ namespace FactoryAssembly
             }
 
             return plural;
-        }
-
-        private IEnumerator ShowStamp()
-        {
-            yield return new WaitForSeconds(2.0f);
-
-            GetComponentInParent<ResultBinderConverter>().ShowStamp();
         }
     }
 }

@@ -51,16 +51,6 @@ namespace FactoryAssembly
             Invoice.SetActive(false);
         }
 
-        internal void ShowStamp()
-        {
-            BombBinder bombBinder = SceneManager.Instance.PostGameState.Room.BombBinder;
-            ShowStamp(bombBinder.ResultDefusedPage);
-            ShowStamp(bombBinder.ResultExplodedPage);
-            ShowStamp(bombBinder.ResultFreeplayDefusedPage);
-            ShowStamp(bombBinder.ResultFreeplayExplodedPage);
-            ShowStamp(bombBinder.ResultTournamentPage);
-        }
-
         private IEnumerator ConvertCoroutine()
         {
             yield return null;
@@ -100,21 +90,6 @@ namespace FactoryAssembly
                 {
                     textEntry.gameObject.SetActive(false);
                 }
-            }
-        }
-
-        private void ShowStamp(ResultPage page)
-        {
-            if (page.gameObject.activeInHierarchy)
-            {
-                page.Stamp.SetActive(true);
-
-                Vector3 position = page.Stamp.transform.localPosition;
-                position.y = ConvertedStampY;
-                page.Stamp.transform.localPosition = position;
-
-                _audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Stamp, page.Stamp.transform);
-                KTInputManager.Instance.AddInteractionPunch(page.Stamp.transform.position, punchAmplitudeModifier: 1.0f, punchDuration: 0.75f, punchOscillationPeriod: 0.3f);
             }
         }
     }
